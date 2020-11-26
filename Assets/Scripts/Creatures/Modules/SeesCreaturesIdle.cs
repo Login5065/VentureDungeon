@@ -35,7 +35,7 @@ namespace Dungeon.Creatures
                 if (creature == null || creature.health <= 0)
                     dirty = true;
                 else
-                    distance = Vector3.Distance(creature.gameObject.transform.position, this.gameObject.transform.position);
+                    distance = Vector3.Distance(creature.transform.position, owner.transform.position);
                 return (creature, distance);
             }).OrderBy(x => x.distance);
 
@@ -66,6 +66,6 @@ namespace Dungeon.Creatures
             return owner.isAttacking;
         }
         public List<Vector2Int> TryGetPathTowardsCreature(Creature creature)
-            => TilemapPathfinder.FindPathToOrBelow(Statics.TileMapFG, creature.transform.position, this.gameObject.transform.position, Mathf.CeilToInt(owner.height));
+            => TilemapPathfinder.FindPathToOrBelow(Statics.TileMapFG, creature.transform.position, owner.transform.position, Mathf.CeilToInt(owner.height));
     }
 }

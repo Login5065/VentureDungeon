@@ -47,6 +47,15 @@ namespace Dungeon.Variables
             }
         }
         public static bool gameStarted = false;
+        public static int monsterIndex = 0;
+        public static int monsterID
+        {
+            get
+            {
+                monsterIndex++;
+                return monsterIndex;
+            }
+        }
         void Start()
         {
             StartCoroutine(TickDownFame());

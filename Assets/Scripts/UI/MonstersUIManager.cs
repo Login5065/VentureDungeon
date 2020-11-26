@@ -24,7 +24,8 @@ namespace Dungeon.UI
             MonsterButtons.Add(Statics.LeftMenuMonsters.transform.Find("ButtonBowSkeleton").GetComponent<Button>());
             MonsterButtons.Add(Statics.LeftMenuMonsters.transform.Find("ButtonSpearSkeleton").GetComponent<Button>());
             MonsterButtons.Add(Statics.LeftMenuMonsters.transform.Find("ButtonDevHero").GetComponent<Button>());
-            
+            MonsterButtons.Add(Statics.LeftMenuMonsters.transform.Find("ButtonDevDragon").GetComponent<Button>());
+
             for (int i = 0; i < MonsterButtons.Count; i++)
             {
                 var x = i;
@@ -127,6 +128,10 @@ namespace Dungeon.UI
                 case 3:
                     monsterSelected = Resources.Load<GameObject>("Hero");
                     monsterSelectedGhost = Resources.Load<GameObject>("HeroGhost");
+                    break;
+                case 4:
+                    monsterSelected = Resources.Load<GameObject>("Dragon");
+                    monsterSelectedGhost = Resources.Load<GameObject>("DragonGhost");
                     break;
                 default:
                     Statics.UIManager.mode = (int)UIManager.UIModes.None;

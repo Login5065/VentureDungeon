@@ -2,8 +2,8 @@
 {
     public class AttackModule : CreatureModule
     {
-        public int animator;
         public float range;
+        public string attackAnimation = "Attack1";
         public virtual bool Attack()
         {
             return false;

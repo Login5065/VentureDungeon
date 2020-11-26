@@ -46,6 +46,7 @@ namespace Dungeon.Creatures
             MaceSkeleton,
             BowSkeleton,
             SpearSkeleton,
+            Dragon
         }
         public float
             height = 1,
@@ -61,7 +62,6 @@ namespace Dungeon.Creatures
             idleTimer = 0f,
             attackRange = 1.0f
             ;
-
         public float Health
         {
             get => health;
@@ -72,7 +72,6 @@ namespace Dungeon.Creatures
                 HPBar.transform.localScale = new Vector3(health / maxHealth, 1, 2);
             }
         }
-
         public int
             type = 0,
             resourceType = 0,
@@ -98,7 +97,8 @@ namespace Dungeon.Creatures
             shouldBeSeen = true,
             isAttacking = false,
             attackFound = false,
-            idleFound = false
+            idleFound = false,
+            busy = false
             ;
 
         public HashSet<AttackModule> attackModules;
@@ -107,6 +107,7 @@ namespace Dungeon.Creatures
         private IdleModule chosenIdle;
         public bool CanSell => controllable;
         public int GoldValue => (int)(creatureCost * health / maxHealth);
+        private string currentState;
 
         void Start()
         {
@@ -131,22 +132,19 @@ namespace Dungeon.Creatures
             }
             attackModules = new HashSet<AttackModule>();
             idleModules = new HashSet<IdleModule>();
-            foreach (var script in gameObject.GetComponents<MonoBehaviour>())
+            foreach (var attac in gameObject.transform.Find("AttackModules").GetComponents<MonoBehaviour>())
             {
-                if (script.GetType().IsSubclassOf(typeof(AttackModule)))
-                {
-                    var prep = script as AttackModule;
-                    prep.owner = this;
-                    attackModules.Add(prep);
-                    if (prep.priority > maxAttackPriority) maxAttackPriority = prep.priority;
-                }
-                else if (script.GetType().IsSubclassOf(typeof(IdleModule)))
-                {
-                    var prep = script as IdleModule;
-                    prep.owner = this;
-                    idleModules.Add(prep);
-                    if (prep.priority > maxIdlePriority) maxIdlePriority = prep.priority;
-                }
+                var prepa = attac as AttackModule;
+                prepa.owner = this;
+                attackModules.Add(prepa);
+                if (prepa.priority > maxAttackPriority) maxAttackPriority = prepa.priority;
+            }
+            foreach (var idle in gameObject.transform.Find("IdleModules").GetComponents<MonoBehaviour>())
+            {
+                var prepi = idle as IdleModule;
+                prepi.owner = this;
+                idleModules.Add(prepi);
+                if (prepi.priority > maxIdlePriority) maxIdlePriority = prepi.priority;
             }
         }
 
@@ -156,8 +154,19 @@ namespace Dungeon.Creatures
             //timeToRecalculatePathToTreasure -= Time.deltaTime;
             if (dying) return;
             if (!isAttacking && Statics.UIManager.SelectedCreature == this && Input.GetMouseButtonDown(1) && Statics.UIManager.mode == (int)UIManager.UIModes.Move && controllable) { HandleMoveOrder(); }
-            HandleIdle();
+            if (!busy)
+            {
+                HandleIdle();
+            }
             CheckFlip();
+        }
+
+        public bool ChangeAnimationState(string newState)
+        {
+            if (currentState == newState) return false;
+            animator.Play(newState);
+            currentState = newState;
+            return true;
         }
 
         public void HandleIdle()
@@ -233,6 +242,16 @@ namespace Dungeon.Creatures
                     chosenAttack.tried = true;
                 }
             }
+        }
+
+        public void Busy()
+        {
+            busy = true;
+        }
+
+        public void EndBusy()
+        {
+            busy = false;
         }
 
         public void Bonk()

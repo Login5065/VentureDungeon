@@ -1,4 +1,5 @@
 using Dungeon.Variables;
+using Dungeon.Graphics;
 using System.Collections;
 using UnityEngine;
 
@@ -14,7 +15,7 @@ namespace Dungeon.Creatures
         {
             owner.dying = true;
             owner.health = 0;
-            owner.animator.SetInteger("Anim", -1);
+            owner.ChangeAnimationState("Die");
             owner.shouldBeSeen = false;
             owner.StartCoroutine(Die());
             return true;
@@ -22,6 +23,7 @@ namespace Dungeon.Creatures
 
         IEnumerator Die()
         {
+            var shader = owner.gameObject.AddComponent<DissolveEffect>();
             if (owner.value != 0) GameData.Gold += owner.value;
             if (owner.type != 0) GameData.Fame += 1;
             if (owner.type == 0)
@@ -29,8 +31,10 @@ namespace Dungeon.Creatures
                 GameData.Fame -= 1;
                 GameData.Threat += 10;
             }
-            yield return new WaitForSeconds(10);
-            Destroy(this.gameObject);
+            yield return new WaitForSeconds(8);
+            shader.StartDissolve(0.5f);
+            yield return new WaitForSeconds(2);
+            Destroy(owner.gameObject);
             yield break;
         }
     }

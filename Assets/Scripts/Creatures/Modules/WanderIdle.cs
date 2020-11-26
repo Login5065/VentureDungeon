@@ -13,18 +13,18 @@ namespace Dungeon.Creatures
         }
         public override bool Idle()
         {
-            if (owner.idleBacktrackPath.Count == 0) owner.idleBacktrackPath.Add((Vector2Int)Statics.TileMapFG.WorldToCell(transform.position));
+            if (owner.idleBacktrackPath.Count == 0) owner.idleBacktrackPath.Add((Vector2Int)Statics.TileMapFG.WorldToCell(owner.transform.position));
 
             // Too far from last idle pos, go back
             var lastPos = owner.idleBacktrackPath.Last();
-            if (Vector2Int.Distance(lastPos, (Vector2Int)Statics.TileMapFG.WorldToCell(transform.position)) >= 2)
+            if (Vector2Int.Distance(lastPos, (Vector2Int)Statics.TileMapFG.WorldToCell(owner.transform.position)) >= 2)
             {
-                owner.Path = TilemapPathfinder.FindPathToInt(Statics.TileMapFG, lastPos, (Vector2Int)Statics.TileMapFG.WorldToCell(transform.position), Mathf.CeilToInt(owner.height));
+                owner.Path = TilemapPathfinder.FindPathToInt(Statics.TileMapFG, lastPos, (Vector2Int)Statics.TileMapFG.WorldToCell(owner.transform.position), Mathf.CeilToInt(owner.height));
 
                 // Can't find path to last pos, try the starting pos instead
                 if (owner.Path.Count == 0 && owner.idleBacktrackPath.Count > 1)
                 {
-                    owner.Path = TilemapPathfinder.FindPathToInt(Statics.TileMapFG, owner.idleBacktrackPath.First(), (Vector2Int)Statics.TileMapFG.WorldToCell(transform.position), Mathf.CeilToInt(owner.height));
+                    owner.Path = TilemapPathfinder.FindPathToInt(Statics.TileMapFG, owner.idleBacktrackPath.First(), (Vector2Int)Statics.TileMapFG.WorldToCell(owner.transform.position), Mathf.CeilToInt(owner.height));
                     owner.idleBacktrackPath.RemoveRange(1, owner.idleBacktrackPath.Count - 2);
                 }
 
@@ -32,7 +32,7 @@ namespace Dungeon.Creatures
                 if (owner.Path.Count == 0)
                 {
                     owner.idleBacktrackPath.Clear();
-                    owner.idleBacktrackPath.Add((Vector2Int)Statics.TileMapFG.WorldToCell(transform.position));
+                    owner.idleBacktrackPath.Add((Vector2Int)Statics.TileMapFG.WorldToCell(owner.transform.position));
                 }
             }
 
@@ -55,7 +55,7 @@ namespace Dungeon.Creatures
                     var sign = Random.value < 0.5f ? -1 : 1;
                     var value = Random.Range(0, 4);
 
-                    var startingPos = (Vector2Int)Statics.TileMapFG.WorldToCell(transform.position);
+                    var startingPos = (Vector2Int)Statics.TileMapFG.WorldToCell(owner.transform.position);
 
                     for (int checks = 0; checks < 4; checks++)
                     {
@@ -77,7 +77,7 @@ namespace Dungeon.Creatures
                             pos += pickedDirection;
 
                             // Try to get the new path to the target
-                            var newPath = TilemapPathfinder.FindPathToInt(Statics.TileMapFG, pos, (Vector2Int)Statics.TileMapFG.WorldToCell(transform.position), Mathf.CeilToInt(owner.height));
+                            var newPath = TilemapPathfinder.FindPathToInt(Statics.TileMapFG, pos, (Vector2Int)Statics.TileMapFG.WorldToCell(owner.transform.position), Mathf.CeilToInt(owner.height));
                             // Make sure we take the most direct path
                             if (newPath?.Count == step)
                                 owner.Path = newPath;

@@ -14,7 +14,7 @@ namespace Dungeon.Creatures
         }
         public override bool Idle()
         {
-            bool CanPickUp(Treasure x) => Mathf.Abs(x.transform.position.x - gameObject.transform.position.x) <= (owner.width / 2) + 0.1f && Mathf.Abs(x.transform.position.y - (owner.height / 2) - gameObject.transform.position.y) <= (owner.height / 2) + 0.1f;
+            bool CanPickUp(Treasure x) => Mathf.Abs(x.transform.position.x - owner.transform.position.x) <= (owner.width / 2) + 0.1f && Mathf.Abs(x.transform.position.y - (owner.height / 2) - owner.transform.position.y) <= (owner.height / 2) + 0.1f;
 
             if (owner.timeToRecalculatePathToTreasure > 0)
             {
@@ -45,7 +45,7 @@ namespace Dungeon.Creatures
             {
                 if (treasure.currentGold > 0)
                 {
-                    var currentPath = TilemapPathfinder.FindPathToOrBelowInt(Statics.TileMapFG, treasure.GridPosition, (Vector2Int)Statics.TileMapFG.WorldToCell(gameObject.transform.position), Mathf.CeilToInt(owner.height), Mathf.CeilToInt(owner.height) - 1);
+                    var currentPath = TilemapPathfinder.FindPathToOrBelowInt(Statics.TileMapFG, treasure.GridPosition, (Vector2Int)Statics.TileMapFG.WorldToCell(owner.transform.position), Mathf.CeilToInt(owner.height), Mathf.CeilToInt(owner.height) - 1);
 
                     if (currentPath != null && (owner.Path.Count > currentPath.Count || owner.Path.Count == 0))
                     {

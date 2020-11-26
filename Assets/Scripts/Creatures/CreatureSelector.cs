@@ -14,7 +14,8 @@ public class CreatureSelector : MonoBehaviour
         "Hero",
         "Mace Skeleton",
         "Bow Skeleton",
-        "Spear Skeleton"
+        "Spear Skeleton",
+        "Black Dragon"
     };
     // Start is called before the first frame update
     void Start()
@@ -24,6 +25,7 @@ public class CreatureSelector : MonoBehaviour
         MonsterIcons.Add(SelectedUI.transform.Find("Image Wrap").Find("MaceSkeleton").gameObject);
         MonsterIcons.Add(SelectedUI.transform.Find("Image Wrap").Find("BowSkeleton").gameObject);
         MonsterIcons.Add(SelectedUI.transform.Find("Image Wrap").Find("SpearSkeleton").gameObject);
+        MonsterIcons.Add(SelectedUI.transform.Find("Image Wrap").Find("Dragon").gameObject);
         SelectedUI.SetActive(false);
     }
 

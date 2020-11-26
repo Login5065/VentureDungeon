@@ -8,7 +8,7 @@ namespace Dungeon.Creatures
         }
         public override bool Idle()
         {
-            owner.animator.SetInteger("Anim", 0);
+            owner.ChangeAnimationState("Idle");
             return true;
         }
     }

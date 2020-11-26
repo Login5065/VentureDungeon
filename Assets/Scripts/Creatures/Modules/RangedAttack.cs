@@ -29,7 +29,7 @@ namespace Dungeon.Creatures
             if (!hits.Any(x => WouldCollideWith(x.transform)))
             {
                 owner.isAttacking = true;
-                owner.animator.SetInteger("Anim", animator);
+                owner.ChangeAnimationState(attackAnimation);
                 if (owner.gameObject.transform.position.x > owner.closestCreature.transform.position.x)
                 {
                     owner.GetComponent<SpriteRenderer>().flipX = true;
