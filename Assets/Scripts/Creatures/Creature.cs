@@ -4,16 +4,18 @@ using Dungeon.UI;
 using Dungeon.Variables;
 using Dungeon.Scripts;
 using System.Linq;
+using Dungeon.Graphics;
 
 namespace Dungeon.Creatures
 {
     public class Creature : MonoBehaviour, ISellable
     {
+        public ShaderEffects material;
+        public ShaderEffects hpmaterial;
         public Animator animator;
         private AudioSource audioSource;
         public AudioClip impact;
         public GameObject HPBar;
-        public GameObject selection;
         public HashSet<Creature> seenCreatures = new HashSet<Creature>(); // HashSet - no duplicates allowed
         public CircleCollider2D sightCollider;
         public BoxCollider2D hitBox;
@@ -40,15 +42,8 @@ namespace Dungeon.Creatures
         }
         public List<Vector2Int> idleBacktrackPath;
         public CreatureSpawner spawnerObject;
-        private enum MonsterType
-        {
-            Hero,
-            MaceSkeleton,
-            BowSkeleton,
-            SpearSkeleton,
-            Dragon
-        }
         public float
+            hpbaroffset = 0.85f,
             height = 1,
             width = 1,
             maxHealth = 100,
@@ -59,6 +54,7 @@ namespace Dungeon.Creatures
             speed = 0.1f,
             sightRange = 3.0f,
             timeToRecalculatePathToTreasure = 10f,
+            timeToRecalculatePathToEnemy = 0f,
             idleTimer = 0f,
             attackRange = 1.0f
             ;
@@ -67,9 +63,10 @@ namespace Dungeon.Creatures
             get => health;
             set
             {
+                float temp = health;
                 if (value < 0) health = 0;
                 else health = value;
-                HPBar.transform.localScale = new Vector3(health / maxHealth, 1, 2);
+                hpmaterial.AddOperation(hpbaroffset * (1f - (temp / maxHealth)), "_ClipUvRight", 0.1f, hpbaroffset * (1f - (health / maxHealth)));
             }
         }
         public int
@@ -101,6 +98,7 @@ namespace Dungeon.Creatures
             busy = false
             ;
 
+        public Color selectcolor = Color.red;
         public HashSet<AttackModule> attackModules;
         public HashSet<IdleModule> idleModules;
         private AttackModule chosenAttack;
@@ -111,11 +109,12 @@ namespace Dungeon.Creatures
 
         void Start()
         {
+            material = gameObject.AddComponent<ShaderEffects>();
+            material.material.SetColor("_OutlineColor", selectcolor);
             audioSource = gameObject.GetComponent<AudioSource>();
             animator = gameObject.GetComponent<Animator>();
             HPBar = gameObject.transform.Find("HP_UI").transform.Find("HP").gameObject;
-            selection = gameObject.transform.transform.Find("Selection").gameObject;
-            selection.SetActive(false);
+            hpmaterial = HPBar.AddComponent<ShaderEffects>();
             hitBox = gameObject.AddComponent<BoxCollider2D>();
             hitBox.size = new Vector2(width / 4, height / 4);
             hitBox.offset = new Vector2(0, height / 8);
@@ -150,8 +149,6 @@ namespace Dungeon.Creatures
 
         void Update()
         {
-            //idleTimer -= Time.deltaTime;
-            //timeToRecalculatePathToTreasure -= Time.deltaTime;
             if (dying) return;
             if (!isAttacking && Statics.UIManager.SelectedCreature == this && Input.GetMouseButtonDown(1) && Statics.UIManager.mode == (int)UIManager.UIModes.Move && controllable) { HandleMoveOrder(); }
             if (!busy)
@@ -217,7 +214,7 @@ namespace Dungeon.Creatures
                     gameObject.GetComponent<SpriteRenderer>().flipX = false;
                 }
             }
-            lastPosition = this.gameObject.transform.position;
+            lastPosition = gameObject.transform.position;
         }
 
         public void AttackCreature()
@@ -252,6 +249,7 @@ namespace Dungeon.Creatures
         public void EndBusy()
         {
             busy = false;
+            timeToRecalculatePathToEnemy = 0;
         }
 
         public void Bonk()

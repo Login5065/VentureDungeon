@@ -4,28 +4,20 @@ using UnityEngine.UI;
 using Dungeon.UI;
 using Dungeon.Variables;
 using Dungeon.Creatures;
+using System;
 
 public class CreatureSelector : MonoBehaviour
 {
     public static GameObject SelectedUI;
     private readonly List<GameObject> MonsterIcons = new List<GameObject>();
-    private List<string> monsterNames = new List<string>()
-    {
-        "Hero",
-        "Mace Skeleton",
-        "Bow Skeleton",
-        "Spear Skeleton",
-        "Black Dragon"
-    };
     // Start is called before the first frame update
     void Start()
     {
-        SelectedUI = this.gameObject.transform.Find("Selected").gameObject;
-        MonsterIcons.Add(SelectedUI.transform.Find("Image Wrap").Find("Hero").gameObject);
-        MonsterIcons.Add(SelectedUI.transform.Find("Image Wrap").Find("MaceSkeleton").gameObject);
-        MonsterIcons.Add(SelectedUI.transform.Find("Image Wrap").Find("BowSkeleton").gameObject);
-        MonsterIcons.Add(SelectedUI.transform.Find("Image Wrap").Find("SpearSkeleton").gameObject);
-        MonsterIcons.Add(SelectedUI.transform.Find("Image Wrap").Find("Dragon").gameObject);
+        SelectedUI = gameObject.transform.Find("Selected").gameObject;
+        foreach (var item in Enum.GetNames(typeof(Register.MonsterTypes)))
+        {
+            MonsterIcons.Add(SelectedUI.transform.Find("Image Wrap").Find(item).gameObject);
+        }
         SelectedUI.SetActive(false);
     }
 
@@ -50,14 +42,6 @@ public class CreatureSelector : MonoBehaviour
             {
                 SelectedUI.transform.Find("Bars").transform.Find("Resourcebar").GetComponent<Image>().fillAmount = 0;
             }
-            if (Statics.UIManager.SelectedCreature.resourceType == 1)
-            {
-                SelectedUI.transform.Find("Bars").transform.Find("Resourcebar").GetComponent<Image>().color = Color.yellow;
-            }
-            else
-            {
-                SelectedUI.transform.Find("Bars").transform.Find("Resourcebar").GetComponent<Image>().color = Color.white;
-            }
         }
         if (Input.GetMouseButtonDown(0) && !MouseInputUIBlocker.BlockedByUI)
         {
@@ -79,14 +63,14 @@ public class CreatureSelector : MonoBehaviour
                 {
                     if (Statics.UIManager.SelectedCreature != null)
                     {
-                        Statics.UIManager.SelectedCreature.selection.SetActive(false);
+                        Statics.UIManager.SelectedCreature.material.AddOperation(0.6f, "_OutlineAlpha", 1.0f, 0.0f);
                         Statics.UIManager.SelectedCreature = null;
                     }
                     Statics.UIManager.SelectedCreature = hit.collider.gameObject.GetComponent<Creature>();
-                    Statics.UIManager.SelectedCreature.selection.SetActive(true);
+                    Statics.UIManager.SelectedCreature.material.AddOperation(0.0f, "_OutlineAlpha", 1.0f, 0.6f);
                     Statics.UIManager.mode = (int)UIManager.UIModes.Move;
                     SelectedUI.SetActive(true);
-                    UIManager.SelectedName.text = monsterNames[Statics.UIManager.SelectedCreature.type];
+                    UIManager.SelectedName.text = Register.MonsterNames[Statics.UIManager.SelectedCreature.type];
                     foreach (GameObject icon in MonsterIcons)
                     {
                         icon.SetActive(false);
@@ -98,7 +82,7 @@ public class CreatureSelector : MonoBehaviour
                 {
                     if (Statics.UIManager.SelectedCreature != null)
                     {
-                        Statics.UIManager.SelectedCreature.selection.SetActive(false);
+                        Statics.UIManager.SelectedCreature.material.AddOperation(0.6f, "_OutlineAlpha", 1.0f, 0.0f);
                         Statics.UIManager.SelectedCreature = null;
                     }
                     Statics.UIManager.mode = (int)UIManager.UIModes.None;

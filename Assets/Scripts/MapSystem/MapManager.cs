@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using Dungeon.Extensions;
 using Dungeon.Json;
+using Dungeon.Variables;
 using Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -13,14 +14,14 @@ namespace Dungeon.MapSystem
     {
         public Tilemap tilemap;
         public Tilemap bgtilemap;
-        public ExtendedTile this[int x, int y, bool ground = true] => this[new Vector3Int(x, y, 0), ground];
-        public ExtendedTile this[Vector2Int pos, bool ground = true] => this[pos.ToVec3(), ground];
-        public ExtendedTile this[Vector3Int pos, bool ground = true]
+        public IExtendedTile this[int x, int y, bool ground = true] => this[new Vector3Int(x, y, 0), ground];
+        public IExtendedTile this[Vector2Int pos, bool ground = true] => this[pos.ToVec3(), ground];
+        public IExtendedTile this[Vector3Int pos, bool ground = true]
         {
             get => ground switch
             {
-                true => tilemap.GetTile<ExtendedTile>(pos),
-                false => bgtilemap.GetTile<ExtendedTile>(pos),
+                true => tilemap.GetTile(pos) as IExtendedTile,
+                false => bgtilemap.GetTile(pos) as IExtendedTile,
             };
             set => ReplaceTile(ground, pos, value);
         }
@@ -30,24 +31,22 @@ namespace Dungeon.MapSystem
         // Start is called before the first frame update
         void Start()
         {
-            TileDictionary.LoadTileData("base_tiles.json");
             if (loadDefaultMapFileOnStartup)
                 LoadMap("test_map.json");
+            else
+                InitTilemaps();
         }
 
-        public ExtendedTile BreakTile(bool ground, Vector3Int pos, Type typeToCreate = null)
-            => BreakTile(ground, pos, Matrix4x4.identity, typeToCreate);
-
-        public ExtendedTile BreakTile(bool ground, Vector3Int pos, Matrix4x4 transform, Type typeToCreate = null)
+        public IExtendedTile BreakTile(bool ground, Vector3Int pos)
         {
-            ExtendedTile tile;
+            IExtendedTile tile;
             if (ground)
             {
-                tile = tilemap.GetTile<ExtendedTile>(pos);
+                tile = tilemap.GetTile(pos) as IExtendedTile;
             }
             else
             {
-                tile = bgtilemap.GetTile<ExtendedTile>(pos);
+                tile = bgtilemap.GetTile(pos) as IExtendedTile;
             }
             ExtendedTileData? newTileData = null;
             if (tile != null)
@@ -55,44 +54,83 @@ namespace Dungeon.MapSystem
                 newTileData = tile.TileWhenBroken;
             }
 
-            return ReplaceTile(ground, pos, transform, currentTile: tile, newData: newTileData, typeToCreate: typeToCreate);
+            return ReplaceTile(ground, pos, currentTile: tile, newData: newTileData);
         }
 
-        public ExtendedTile ReplaceTile(bool ground, Vector3Int pos, ExtendedTile currentTile = null, ExtendedTileData? newData = null, ExtendedTile newTile = null, Type typeToCreate = null)
-            => ReplaceTile(ground, pos, Matrix4x4.identity, currentTile, newData, newTile, typeToCreate);
-
-        public ExtendedTile ReplaceTile(bool ground, Vector3Int pos, Matrix4x4 transform, ExtendedTile currentTile = null, ExtendedTileData? newData = null, ExtendedTile newTile = null, Type typeToCreate = null)
+        public IExtendedTile ReplaceTile(bool ground, Vector3Int pos, IExtendedTile currentTile = null, ExtendedTileData? newData = null, IExtendedTile newTile = null)
         {
-            if (newTile == null && newData != null && typeToCreate?.IsAssignableFrom(typeof(ExtendedTile)) != false)
+            if (newTile == null && newData?.TileToUse != null)
             {
-                newTile = ScriptableObject.CreateInstance(typeToCreate ?? typeof(ExtendedTile)) as ExtendedTile;
-                newTile.TileData = newData.Value;
+                newTile = Instantiate(newData.Value.TileToUse.AsTile) as IExtendedTile;
             }
 
             if (currentTile == null)
                 if (ground)
                 {
-                    currentTile = tilemap.GetTile<ExtendedTile>(pos);
+                    currentTile = tilemap.GetTile(pos) as IExtendedTile;
                 }
                 else
                 {
-                    currentTile = bgtilemap.GetTile<ExtendedTile>(pos);
+                    currentTile = bgtilemap.GetTile(pos) as IExtendedTile;
                 }
             if (newTile != null)
             {
-                newTile.transform = transform;
                 newTile.PreTileChanged(currentTile);
             }
             if (ground)
             {
-                tilemap.SetTile(pos, newTile);
+                tilemap.SetTile(pos, newTile?.AsTile);
             }
             else
             {
-                bgtilemap.SetTile(pos, newTile);
+                bgtilemap.SetTile(pos, newTile?.AsTile);
             }
 
             return newTile;
+        }
+
+        public void InitTilemaps()
+        {
+            var tilemaps = new[] { tilemap, bgtilemap };
+
+            foreach (var map in tilemaps)
+            {
+                for (int y = map.cellBounds.yMin; y < map.cellBounds.yMax; y++)
+                {
+                    for (int x = map.cellBounds.xMin; x < map.cellBounds.xMax; x++)
+                    {
+                        var pos = new Vector3Int(x, y, 0);
+                        var tile = map.GetTile(pos);
+
+                        if (tile is IExtendedTile extendedTile)
+                        {
+                            if (extendedTile.TileData.TileToUse == null || string.IsNullOrWhiteSpace(extendedTile.TileData.TileId))
+                                extendedTile.TileData = Statics.TileDictionary[tile.name];
+                            if (tile is Tile currentTile)
+                                currentTile.colliderType = extendedTile.TileData.IsSolid ? Tile.ColliderType.Grid : Tile.ColliderType.None;
+                            else if (tile is RuleTile currentRuleTile)
+                                currentRuleTile.m_DefaultColliderType = extendedTile.TileData.IsSolid ? Tile.ColliderType.Grid : Tile.ColliderType.None;
+                        }
+                        else if (tile is Tile currentTile)
+                        {
+                            var newTile = ScriptableObject.CreateInstance<ExtendedTile>();
+                            if (!(currentTile is IExtendedTile extended) || extended.TileData != null)
+                                newTile.TileData = Statics.TileDictionary[currentTile.sprite.name];
+                            newTile.colliderType = newTile.TileData.IsSolid ? Tile.ColliderType.Grid : Tile.ColliderType.None;
+                            map.SetTransformMatrix(pos, currentTile.transform);
+                            map.SetTile(pos, newTile);
+                        }
+                        else if (tile is RuleTile currentRuleTile)
+                        {
+                            var newTile = ScriptableObject.CreateInstance<ExtendedRuleTile>();
+                            if (!(currentRuleTile is IExtendedTile extended) || extended.TileData == null)
+                                newTile.TileData = Statics.TileDictionary[currentRuleTile.m_DefaultSprite.name];
+                            newTile.m_DefaultColliderType = newTile.TileData.IsSolid ? Tile.ColliderType.Grid : Tile.ColliderType.None;
+                            map.SetTile(pos, newTile);
+                        }
+                    }
+                }
+            }
         }
 
         public void SaveMap()
@@ -106,37 +144,15 @@ namespace Dungeon.MapSystem
 
                 foreach (var sprite in sprites)
                 {
-                    if (!TileDictionary.TileData.ContainsKey(sprite.name))
+                    if (!Statics.TileDictionary.ContainsKey(sprite.name))
                     {
                         newEntries++;
-                        TileDictionary.TileData[sprite.name] = new ExtendedTileData(sprite, true, 100);
+                        Statics.TileDictionary[sprite.name] = new ExtendedTileData(sprite.name, true, 100);
                     }
                 }
             }
 
-            if (newEntries > 0)
-                TileDictionary.SaveFileData("new_data.json");
-
-            foreach (var map in tilemaps)
-            {
-                for (int y = map.cellBounds.yMin; y < map.cellBounds.yMax; y++)
-                {
-                    for (int x = map.cellBounds.xMin; x < map.cellBounds.xMax; x++)
-                    {
-                        var pos = new Vector3Int(x, y, 0);
-
-                        if (map.GetTile(pos) is Tile currentTile)
-                        {
-                            var newTile = ScriptableObject.CreateInstance<ExtendedTile>();
-                            newTile.TileData = TileDictionary.TileData[currentTile.sprite.name];
-                            newTile.transform = map.GetTransformMatrix(pos);
-                            newTile.colliderType = newTile.TileData.IsSolid ? Tile.ColliderType.Grid : Tile.ColliderType.None;
-                            map.SetTransformMatrix(pos, Matrix4x4.identity);
-                            map.SetTile(pos, newTile);
-                        }
-                    }
-                }
-            }
+            InitTilemaps();
 
             File.WriteAllText("new_test_map.json", JsonConvert.SerializeObject(new[] { (tilemap, tilemap.name), (bgtilemap, bgtilemap.name) }, new TilemapConverter()));
         }

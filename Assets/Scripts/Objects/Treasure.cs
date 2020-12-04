@@ -8,7 +8,7 @@ namespace Dungeon.Objects
         public int maxGold;
         public override bool CanSell => true;
         public override int GoldValue => currentGold;
-        void Start()
+        public void Awake()
         {
             Variables.GameData.gameStarted = true;
         }

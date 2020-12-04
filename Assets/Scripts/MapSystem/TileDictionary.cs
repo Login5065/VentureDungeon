@@ -1,41 +1,27 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Dungeon.Json;
 using Newtonsoft.Json;
+using UnityEngine;
 
 namespace Dungeon.MapSystem
 {
-    public static class TileDictionary
+    public class TileDictionary : MonoBehaviour
     {
-        public static Dictionary<string, ExtendedTileData> TileData { get; private set; } = new Dictionary<string, ExtendedTileData>();
-
-        public static void LoadTileData(string path, bool clear = false, bool overwriteExisting = true)
+        [SerializeField]
+        private List<ExtendedTileData> tileData;
+        public List<ExtendedTileData> TileData { get => tileData; private set => tileData = value; }
+        public ExtendedTileData this[string id]
         {
-            if (File.Exists(path) && new FileInfo(path).Extension.ToLower() == ".json")
+            get => TileData.Where(x => x.TileId == id).FirstOrDefault();
+            set
             {
-                var data = JsonConvert.DeserializeObject<Dictionary<string, ExtendedTileData>>(File.ReadAllText(path), new SpriteConverter());
-
-                if (clear)
-                    TileData = data;
-                else
-                {
-                    foreach (var item in data)
-                    {
-                        if (overwriteExisting || !TileData.ContainsKey(item.Key))
-                            TileData[item.Key] = item.Value;
-                    }
-                }
+                TileData.RemoveAll(x => x.TileId == value.TileId);
+                TileData.Add(value);
             }
-            else throw new FileNotFoundException("Could not load tile dictionary file", path);
         }
 
-        public static void SaveFileData(string path, bool overwrite = false)
-        {
-            if (overwrite && File.Exists(path))
-                File.Delete(path);
-
-            if (!File.Exists(path))
-                File.WriteAllText(path, JsonConvert.SerializeObject(TileData, new SpriteConverter()));
-        }
+        public bool ContainsKey(string key) => TileData.Any(x => x.TileId == key);
     }
 }

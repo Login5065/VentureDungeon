@@ -2,44 +2,22 @@
 using UnityEngine;
 using UnityEngine.UI;
 using Dungeon.Variables;
+using System;
 
 namespace Dungeon.UI
 {
     public class ArchitectUIManager : MonoBehaviour
     {
         private readonly List<Button> ArchitectButtons = new List<Button>();
-        public enum Architect
-        {
-            Wood,
-            StoneBrick,
-            Glass,
-            Ladder,
-            Oak,
-            Birch,
-            Brick,
-            CottonBlue,
-            CottonGreen,
-            CottonRed,
-            Cotton,
-            Mine,
-            None,
-        }
         public int material = 0;
         public bool ground = true;
-        // Start is called before the first frame update
+
         void Start()
         {
-            ArchitectButtons.Add(Statics.LeftMenuArchitect.transform.Find("ButtonWood").GetComponent<Button>());
-            ArchitectButtons.Add(Statics.LeftMenuArchitect.transform.Find("ButtonStoneBrick").GetComponent<Button>());
-            ArchitectButtons.Add(Statics.LeftMenuArchitect.transform.Find("ButtonGlass").GetComponent<Button>());
-            ArchitectButtons.Add(Statics.LeftMenuArchitect.transform.Find("ButtonLadder").GetComponent<Button>());
-            ArchitectButtons.Add(Statics.LeftMenuArchitect.transform.Find("ButtonOak").GetComponent<Button>());
-            ArchitectButtons.Add(Statics.LeftMenuArchitect.transform.Find("ButtonBirch").GetComponent<Button>());
-            ArchitectButtons.Add(Statics.LeftMenuArchitect.transform.Find("ButtonBrick").GetComponent<Button>());
-            ArchitectButtons.Add(Statics.LeftMenuArchitect.transform.Find("ButtonBlueCotton").GetComponent<Button>());
-            ArchitectButtons.Add(Statics.LeftMenuArchitect.transform.Find("ButtonGreenCotton").GetComponent<Button>());
-            ArchitectButtons.Add(Statics.LeftMenuArchitect.transform.Find("ButtonRedCotton").GetComponent<Button>());
-            ArchitectButtons.Add(Statics.LeftMenuArchitect.transform.Find("ButtonCotton").GetComponent<Button>());
+            foreach (var item in Enum.GetNames(typeof(Register.TileTypes)))
+            {
+                ArchitectButtons.Add(Statics.LeftMenuArchitect.transform.Find("Button" + item).GetComponent<Button>());
+            }
             ArchitectButtons.Add(Statics.LeftMenuArchitect.transform.Find("ButtonMine").GetComponent<Button>());
             for (int b = 0; b < ArchitectButtons.Count; b++) {
                 int x = b;

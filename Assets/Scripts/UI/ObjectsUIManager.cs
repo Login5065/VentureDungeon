@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Dungeon.MapSystem;
 using Dungeon.Objects;
 using Dungeon.Variables;
@@ -19,7 +20,10 @@ namespace Dungeon.UI
 
         private void Start()
         {
-            ObjectsButtons.Add(Statics.LeftMenuObjects.transform.Find("ButtonTreasure").GetComponent<Button>());
+            foreach (var item in Enum.GetNames(typeof(Register.ObjectTypes)))
+            {
+                ObjectsButtons.Add(Statics.LeftMenuObjects.transform.Find("Button" + item).GetComponent<Button>());
+            }
 
             for (int i = 0; i < ObjectsButtons.Count; i++)
             {
@@ -108,17 +112,8 @@ namespace Dungeon.UI
             objectSelectedGhost = null;
             objectGhost = null;
             currentCost = -1;
-            switch (x)
-            {
-                case 0:
-                    objectSelected = Resources.Load<GameObject>("Treasure");
-                    objectSelectedGhost = Resources.Load<GameObject>("TreasureGhost");
-                    break;
-                default:
-                    objectSelected = null;
-                    objectSelectedGhost = null;
-                    break;
-            }
+            objectSelected = Resources.Load<GameObject>("Objects/" + Enum.GetName(typeof(Register.ObjectTypes), x));
+            objectSelectedGhost = Resources.Load<GameObject>("Objects/" + Enum.GetName(typeof(Register.ObjectTypes), x) + "Ghost");
             if (objectSelected != null)
             {
                 Statics.UIManager.mode = (int)UIManager.UIModes.Object;

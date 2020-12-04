@@ -9,7 +9,7 @@ namespace Dungeon.UI
     public class TileSelector : MonoBehaviour
     {
         private RectInt? bounds;
-        public List<ExtendedTile> selectedTiles;
+        public List<ExtendedRuleTile> selectedTiles;
         public List<Vector3Int> selectedCoords;
 
         private void Start()
@@ -27,7 +27,7 @@ namespace Dungeon.UI
                 {
                     var coords = Statics.TileMapFG.WorldToCell(Camera.main.ScreenToWorldPoint(Input.mousePosition));
                     selectedCoords.Add(coords);
-                    selectedTiles.Add(Statics.TileMapFG.GetTile<ExtendedTile>(coords));
+                    selectedTiles.Add(Statics.TileMapFG.GetTile<ExtendedRuleTile>(coords));
                 }
                 ExecuteOperations();
                 ClearSelection();
@@ -38,7 +38,7 @@ namespace Dungeon.UI
         {
             foreach (Vector3Int tile in selectedCoords)
             {
-                Statics.MapManager.ReplaceTile(Statics.ArchitectUIManager.ground, tile, newData: TileDictionary.TileData[Enum.GetName(typeof(ArchitectUIManager.Architect), index).ToLower()]);
+                Statics.MapManager.ReplaceTile(Statics.ArchitectUIManager.ground, tile, newData: Statics.TileDictionary[Enum.GetName(typeof(Register.TileTypes), index)]);
             }
         }
 
@@ -56,7 +56,7 @@ namespace Dungeon.UI
             {
                 if (bounds.HasValue)
                     GetAllTiles(bounds.Value);
-                if (Statics.ArchitectUIManager.material == (int)ArchitectUIManager.Architect.Mine)
+                if (Statics.ArchitectUIManager.material == Enum.GetNames(typeof(Register.TileTypes)).Length)
                 {
                     Mine();
                 }
@@ -80,7 +80,7 @@ namespace Dungeon.UI
             {
                 for (int j = bounds.yMin; j < bounds.yMax; j++)
                 {
-                    selectedTiles.Add(Statics.TileMapFG.GetTile<ExtendedTile>(new Vector3Int(i, j, 0)));
+                    selectedTiles.Add(Statics.TileMapFG.GetTile<ExtendedRuleTile>(new Vector3Int(i, j, 0)));
                     selectedCoords.Add(new Vector3Int(i, j, 0));
                 }
             }

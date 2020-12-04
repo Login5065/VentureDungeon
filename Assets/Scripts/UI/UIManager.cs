@@ -8,7 +8,6 @@ namespace Dungeon.UI
 {
     public class UIManager : MonoBehaviour
     {
-        public static GameObject LeftMenuOuter;
         public static Button ArchitectButton;
         public static GameObject LeftMenuArchitect;
         public static Button MonstersButton;
@@ -25,6 +24,8 @@ namespace Dungeon.UI
         public static GameObject LeftMenuStats;
         public static Button MenuButton;
         public static GameObject RightMenu;
+        public static Button InventoryButton;
+        public static GameObject LeftMenuInventory;
         private List<Button> BottomUIButtons = new List<Button>();
         private List<Button> MenuButtons = new List<Button>();
         private List<GameObject> BottomUITabs = new List<GameObject>();
@@ -39,6 +40,7 @@ namespace Dungeon.UI
             Research,
             Heroes,
             Stats,
+            Inventory,
             Menu
         }
         private enum Menu
@@ -55,12 +57,12 @@ namespace Dungeon.UI
             Build,
             Monster,
             Object,
+            Inventory
         }
         public int mode = 0;
 
         void Start()
         {
-            LeftMenuOuter = GameObject.Find("LeftMenuOuter");
             MenuButton = GameObject.Find("ButtonMenu").GetComponent<Button>();
             BottomUIButtons.Add(ArchitectButton = GameObject.Find("ButtonArchitect").GetComponent<Button>());
             BottomUIButtons.Add(MonstersButton = GameObject.Find("ButtonMonsters").GetComponent<Button>());
@@ -69,6 +71,7 @@ namespace Dungeon.UI
             BottomUIButtons.Add(ResearchButton = GameObject.Find("ButtonResearch").GetComponent<Button>());
             BottomUIButtons.Add(HeroesButton = GameObject.Find("ButtonHeroes").GetComponent<Button>());
             BottomUIButtons.Add(StatsButton = GameObject.Find("ButtonStats").GetComponent<Button>());
+            BottomUIButtons.Add(InventoryButton = GameObject.Find("ButtonInventory").GetComponent<Button>());
             BottomUIButtons.Add(MenuButton = GameObject.Find("ButtonMenu").GetComponent<Button>());
             BottomUITabs.Add(LeftMenuArchitect = GameObject.Find("LeftMenuArchitect"));
             BottomUITabs.Add(LeftMenuMonsters = GameObject.Find("LeftMenuMonsters"));
@@ -77,13 +80,13 @@ namespace Dungeon.UI
             BottomUITabs.Add(LeftMenuResearch = GameObject.Find("LeftMenuResearch"));
             BottomUITabs.Add(LeftMenuHeroes = GameObject.Find("LeftMenuHeroes"));
             BottomUITabs.Add(LeftMenuStats = GameObject.Find("LeftMenuStats"));
+            BottomUITabs.Add(LeftMenuInventory = GameObject.Find("LeftMenuInventory"));
             BottomUITabs.Add(RightMenu = GameObject.Find("RightMenu"));
-            MenuButtons.Add(this.gameObject.transform.Find("RightMenu").transform.Find("ButtonExit").gameObject.GetComponent<Button>());
-            MenuButtons.Add(this.gameObject.transform.Find("RightMenu").transform.Find("ButtonSave").gameObject.GetComponent<Button>());
-            MenuButtons.Add(this.gameObject.transform.Find("RightMenu").transform.Find("ButtonLoad").gameObject.GetComponent<Button>());
-            MenuButtons.Add(this.gameObject.transform.Find("RightMenu").transform.Find("ButtonRestart").gameObject.GetComponent<Button>());
-            SelectedName = this.gameObject.transform.Find("Selected").transform.Find("Name").gameObject.GetComponent<Text>();
-            LeftMenuOuter.SetActive(false);
+            MenuButtons.Add(gameObject.transform.Find("RightMenu").transform.Find("ButtonExit").gameObject.GetComponent<Button>());
+            MenuButtons.Add(gameObject.transform.Find("RightMenu").transform.Find("ButtonSave").gameObject.GetComponent<Button>());
+            MenuButtons.Add(gameObject.transform.Find("RightMenu").transform.Find("ButtonLoad").gameObject.GetComponent<Button>());
+            MenuButtons.Add(gameObject.transform.Find("RightMenu").transform.Find("ButtonRestart").gameObject.GetComponent<Button>());
+            SelectedName = gameObject.transform.Find("Selected").transform.Find("Name").gameObject.GetComponent<Text>();
             for (int b = 0; b < MenuButtons.Count; b++) {
                 int x = b;
                 Button btn = MenuButtons[x];
@@ -107,8 +110,6 @@ namespace Dungeon.UI
             }
             Variables.Statics.GridOverlay.showMain = false;
             Variables.Statics.GridOverlay.showSub = false;
-            LeftMenuOuter.SetActive(false);
-            if (buttonPressed != (int) BottomUI.Menu)LeftMenuOuter.SetActive(true);
             switch (buttonPressed)
             {
                 case (int) BottomUI.Architect:
@@ -138,6 +139,9 @@ namespace Dungeon.UI
                     break;
                 case (int) BottomUI.Menu:
                     RightMenu.SetActive(true);
+                    break;
+                case (int) BottomUI.Inventory:
+                    LeftMenuInventory.SetActive(true);
                     break;
             }
         }
@@ -171,11 +175,10 @@ namespace Dungeon.UI
                 }
                 Variables.Statics.GridOverlay.showMain = false;
                 Variables.Statics.GridOverlay.showSub = false;
-                LeftMenuOuter.SetActive(false);
                 RightMenu.SetActive(false);
                 if (SelectedCreature != null)
                 {
-                    SelectedCreature.selection.SetActive(false);
+                    //SelectedCreature.selection.SetActive(false);
                     SelectedCreature = null;
                 }
                 mode = (int)UIModes.None;

@@ -20,10 +20,12 @@ namespace Dungeon.UI
 
         private void Start()
         {
-            MonsterButtons.Add(Statics.LeftMenuMonsters.transform.Find("ButtonMaceSkeleton").GetComponent<Button>());
+            MonsterButtons.Add(Statics.LeftMenuMonsters.transform.Find("ButtonSwordSkeleton").GetComponent<Button>());
             MonsterButtons.Add(Statics.LeftMenuMonsters.transform.Find("ButtonBowSkeleton").GetComponent<Button>());
-            MonsterButtons.Add(Statics.LeftMenuMonsters.transform.Find("ButtonSpearSkeleton").GetComponent<Button>());
-            MonsterButtons.Add(Statics.LeftMenuMonsters.transform.Find("ButtonDevHero").GetComponent<Button>());
+            MonsterButtons.Add(Statics.LeftMenuMonsters.transform.Find("ButtonAxeSkeleton").GetComponent<Button>());
+            MonsterButtons.Add(Statics.LeftMenuMonsters.transform.Find("ButtonDevSwordHero").GetComponent<Button>());
+            MonsterButtons.Add(Statics.LeftMenuMonsters.transform.Find("ButtonDevBowHero").GetComponent<Button>());
+            MonsterButtons.Add(Statics.LeftMenuMonsters.transform.Find("ButtonDevSpearHero").GetComponent<Button>());
             MonsterButtons.Add(Statics.LeftMenuMonsters.transform.Find("ButtonDevDragon").GetComponent<Button>());
 
             for (int i = 0; i < MonsterButtons.Count; i++)
@@ -114,24 +116,32 @@ namespace Dungeon.UI
             switch (x)
             {
                 case 0:
-                    monsterSelected = Resources.Load<GameObject>("MaceSkeleton");
-                    monsterSelectedGhost = Resources.Load<GameObject>("MaceSkeletonGhost");
+                    monsterSelected = Resources.Load<GameObject>("Creatures/SwordSkeleton");
+                    monsterSelectedGhost = Resources.Load<GameObject>("Creatures/SwordSkeletonGhost");
                     break;
                 case 1:
-                    monsterSelected = Resources.Load<GameObject>("BowSkeleton");
-                    monsterSelectedGhost = Resources.Load<GameObject>("BowSkeletonGhost");
+                    monsterSelected = Resources.Load<GameObject>("Creatures/BowSkeleton");
+                    monsterSelectedGhost = Resources.Load<GameObject>("Creatures/BowSkeletonGhost");
                     break;
                 case 2:
-                    monsterSelected = Resources.Load<GameObject>("SpearSkeleton");
-                    monsterSelectedGhost = Resources.Load<GameObject>("SpearSkeletonGhost");
+                    monsterSelected = Resources.Load<GameObject>("Creatures/AxeSkeleton");
+                    monsterSelectedGhost = Resources.Load<GameObject>("Creatures/AxeSkeletonGhost");
                     break;
                 case 3:
-                    monsterSelected = Resources.Load<GameObject>("Hero");
-                    monsterSelectedGhost = Resources.Load<GameObject>("HeroGhost");
+                    monsterSelected = Resources.Load<GameObject>("Creatures/SwordHero");
+                    monsterSelectedGhost = Resources.Load<GameObject>("Creatures/SwordHeroGhost");
                     break;
                 case 4:
-                    monsterSelected = Resources.Load<GameObject>("Dragon");
-                    monsterSelectedGhost = Resources.Load<GameObject>("DragonGhost");
+                    monsterSelected = Resources.Load<GameObject>("Creatures/BowHero");
+                    monsterSelectedGhost = Resources.Load<GameObject>("Creatures/BowHeroGhost");
+                    break;
+                case 5:
+                    monsterSelected = Resources.Load<GameObject>("Creatures/SpearHero");
+                    monsterSelectedGhost = Resources.Load<GameObject>("Creatures/SpearHeroGhost");
+                    break;
+                case 6:
+                    monsterSelected = Resources.Load<GameObject>("Creatures/Dragon");
+                    monsterSelectedGhost = Resources.Load<GameObject>("Creatures/DragonGhost");
                     break;
                 default:
                     Statics.UIManager.mode = (int)UIManager.UIModes.None;

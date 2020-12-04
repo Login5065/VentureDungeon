@@ -8,7 +8,7 @@ using UnityEngine.Tilemaps;
 
 namespace Dungeon.MapSystem
 {
-    class ExtraDataTile : ExtendedTile
+    class ExtraDataTile : ExtendedRuleTile
     {
     }
 }

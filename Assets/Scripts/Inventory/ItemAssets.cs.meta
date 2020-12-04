@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: cbbe769933c4c7a4693bc7b9d3301cbc
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - ItemObject: {instanceID: 0}
+  - swordSprite: {instanceID: 0}
+  - shieldSprite: {instanceID: 0}
+  - GoldIdolSprite: {instanceID: 0}
+  - HealthPotionSprite: {instanceID: 0}
+  - ManaPotionSprite: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

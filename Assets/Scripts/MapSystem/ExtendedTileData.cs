@@ -1,67 +1,66 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Diagnostics;
 using Newtonsoft.Json;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 namespace Dungeon.MapSystem
 {
     [JsonObject]
+    [Serializable]
+    [DebuggerDisplay("Tile: {TileId}")]
     public struct ExtendedTileData : IEquatable<ExtendedTileData>
     {
-        public Sprite Sprite { get; set; }
-        
-        public bool IsSolid { get; private set; }
+        // For unity editor
+        [SerializeReference]
+        private TileBase tileToUse;
+        [SerializeField]
+        private string tileId;
+        [SerializeField]
+        private bool isSolid;
+        [SerializeField]
+        private int workToBreak;
+        [SerializeField]
+        private bool canClimb;
+        [SerializeField]
+        private bool isPlatform;
+        [SerializeField]
+        private int tileMatchingLayer;
+
+        // Exposed to stuff that's not unity editor
+        [JsonIgnore]
+        public IExtendedTile TileToUse { get => tileToUse as IExtendedTile; set => tileToUse = value.AsTile; }
+        public string TileId { get => tileId; private set => tileId = value; }
+        public bool IsSolid { get => isSolid; private set => isSolid = value; }
         [JsonIgnore]
         public bool CanBreak => WorkToBreak >= 0;
-        public int WorkToBreak { get; private set; }
-        public bool CanClimb { get; private set; }
-        public bool IsPlatform { get; private set; }
+        public int WorkToBreak { get => workToBreak; private set => workToBreak = value; }
+        public bool CanClimb { get => canClimb; private set => canClimb = value; }
+        public bool IsPlatform { get => isPlatform; private set => isPlatform = value; }
+        public int TileMatchingLayer { get => tileMatchingLayer; private set => tileMatchingLayer = value; }
         [JsonIgnore]
         public bool CanStandOn => IsSolid || CanClimb || IsPlatform;
 
         [JsonConstructor]
-        public ExtendedTileData(Sprite sprite, bool isSolid = false, int workToBreak = -1, bool canClimb = false, bool isPlatform = false)
+        public ExtendedTileData(string tileId, bool isSolid = false, int workToBreak = -1, bool canClimb = false, bool isPlatform = false, int tileMatchingLayer = 0)
         {
-            Sprite = sprite;
-            IsSolid = isSolid;
-            WorkToBreak = workToBreak;
-            CanClimb = canClimb;
-            IsPlatform = isPlatform;
+            tileToUse = null;
+            this.tileId = tileId;
+            this.isSolid = isSolid;
+            this.workToBreak = workToBreak;
+            this.canClimb = canClimb;
+            this.isPlatform = isPlatform;
+            this.tileMatchingLayer = tileMatchingLayer;
         }
 
-        public override bool Equals(object obj)
-        {
-            return obj is ExtendedTileData data && Equals(data);
-        }
+        public override bool Equals(object obj) => obj is ExtendedTileData data && Equals(data);
 
-        public bool Equals(ExtendedTileData other)
-        {
-            return Sprite.name == other.Sprite.name &&
-                   IsSolid == other.IsSolid &&
-                   WorkToBreak == other.WorkToBreak &&
-                   CanClimb == other.CanClimb &&
-                   IsPlatform == other.IsPlatform;
-        }
+        public bool Equals(ExtendedTileData other) => other.TileId == TileId;
 
-        public override int GetHashCode()
-        {
-            int hashCode = 296606536;
-            hashCode = hashCode * -1521134295 + EqualityComparer<Sprite>.Default.GetHashCode(Sprite);
-            hashCode = hashCode * -1521134295 + IsSolid.GetHashCode();
-            hashCode = hashCode * -1521134295 + WorkToBreak.GetHashCode();
-            hashCode = hashCode * -1521134295 + CanClimb.GetHashCode();
-            hashCode = hashCode * -1521134295 + IsPlatform.GetHashCode();
-            return hashCode;
-        }
+        public override int GetHashCode() => TileId.GetHashCode();
 
-        public static bool operator ==(ExtendedTileData left, ExtendedTileData right)
-        {
-            return left.Equals(right);
-        }
+        public static bool operator ==(ExtendedTileData left, ExtendedTileData right) => left.Equals(right);
 
-        public static bool operator !=(ExtendedTileData left, ExtendedTileData right)
-        {
-            return !(left == right);
-        }
+        public static bool operator !=(ExtendedTileData left, ExtendedTileData right) => !(left == right);
     }
 }

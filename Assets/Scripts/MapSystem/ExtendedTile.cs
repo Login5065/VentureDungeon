@@ -1,28 +1,20 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using UnityEngine.Tilemaps;
 
 namespace Dungeon.MapSystem
 {
-    public class ExtendedTile : Tile
+    public class ExtendedTile : Tile, IExtendedTile
     {
-        private ExtendedTileData tileData;
+        public TileBase AsTile => this;
+        public ExtendedTileData TileData { get; set; }
+        public ExtendedTileData? TileWhenBroken { get; private set; }
 
-        public ExtendedTileData TileData
+        public void PreTileChanged(IExtendedTile currentTile)
         {
-            get => tileData;
-            set
-            {
-                tileData = value;
-                sprite = tileData.Sprite;
-            }
-        }
-
-        /// <summary>Return tile to be used when broken. Override and in ExtendedTile subclass to allow for more dynamic tile values.</summary>
-        public virtual ExtendedTileData? TileWhenBroken { get; private set; }
-
-        public virtual void PreTileChanged(ExtendedTile currentTile)
-        {
-
         }
     }
 }

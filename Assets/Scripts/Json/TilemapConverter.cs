@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Dungeon.Extensions;
 using Dungeon.MapSystem;
+using Dungeon.Variables;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using UnityEngine;
@@ -58,11 +59,10 @@ namespace Dungeon.Json
                     currentBounds = new BoundsInt(xMin, yMin, 0, xSize, ySize, 0);
                 }
 
-                // Read our tiles and their rotation (if any)
+                // Read our tiles
                 var tileIds = data["tileIds"]
                     .ToArray()
-                    .Select(x => x.ToObject<JObject>())
-                    .Select(x => (key: x["k"].ToObject<int>(), rotation: x["r"].ToObject<byte>()))
+                    .Select(x => x.ToObject<int>())
                     .ToArray();
 
                 int index = 0;
@@ -72,37 +72,16 @@ namespace Dungeon.Json
                 {
                     for (int x = currentBounds.xMin; x < currentBounds.xMax; x++)
                     {
-                        var (key, rotation) = tileIds[index++];
+                        var key = tileIds[index++];
 
                         // Get an actual (string) id recognized by the game from our int mapped ids
                         var trueId = tilesIdDict[key];
 
                         if (trueId == null) continue;
                         // We'll need a way to handle tiles that use a subclass of ExtendedTile, but good enough for now
-                        var tile = ScriptableObject.CreateInstance<ExtendedTile>();
-                        tile.TileData = TileDictionary.TileData[trueId];
-                        tile.colliderType = tile.TileData.IsSolid ? Tile.ColliderType.Grid : Tile.ColliderType.None;
-                        int rotationZ = 0;
-                        int rotationY = 0;
-
-                        // Read our rotation values
-                        if ((rotation & 0b100) != 0)
-                            rotationY = 180;
-                        switch (rotation & 0b011)
-                        {
-                            case 0b01:
-                                rotationZ = 90;
-                                break;
-                            case 0b10:
-                                rotationZ = 180;
-                                break;
-                            case 0b11:
-                                rotationZ = 270;
-                                break;
-                        }
-
-                        // Set the rotation and tile
-                        tile.transform = Matrix4x4.TRS(Vector3.zero, Quaternion.Euler(0, rotationY, rotationZ), Vector3.one);
+                        var tile = ScriptableObject.CreateInstance<ExtendedRuleTile>();
+                        tile.TileData = Statics.TileDictionary[trueId];
+                        tile.m_DefaultColliderType = tile.TileData.IsSolid ? Tile.ColliderType.Grid : Tile.ColliderType.None;
                         value.SetTile(new Vector3Int(x, y, 0), tile);
                     }
                 }
@@ -119,11 +98,11 @@ namespace Dungeon.Json
 
             writer.WriteStartObject();
 
-            var tilesCasted = Enumerable.Empty<ExtendedTile>();
+            var tilesCasted = Enumerable.Empty<ExtendedRuleTile>();
 
             // Get every single tile from each tilemap
             foreach (var (value, _) in values)
-                tilesCasted = value.GetTilesBlock(value.cellBounds).Cast<ExtendedTile>().Select(x => x == null || x.TileData.Sprite == null ? null : x).Concat(tilesCasted);
+                tilesCasted = value.GetTilesBlock(value.cellBounds).Cast<ExtendedRuleTile>().Select(x => x == null || string.IsNullOrWhiteSpace(x.TileData.TileId) ? null : x).Concat(tilesCasted);
 
             // Get each distinct ExtendedTileData
             var tilesIndexed = tilesCasted
@@ -132,7 +111,7 @@ namespace Dungeon.Json
                 .Select((data, index) => (data, index));
 
             // Map an int for every single possible ExtendedTileData
-            var tilesIdDict = tilesIndexed.ToDictionary(x => x.index, x => TileDictionary.TileData.FirstOrDefault(dict => x.data == dict.Value).Key);
+            var tilesIdDict = tilesIndexed.ToDictionary(x => x.index, x => Statics.TileDictionary.TileData.FirstOrDefault(dict => x.data?.TileId == dict.TileId).TileId);
 
             BoundsInt? defaultBounds = null;
 
@@ -163,32 +142,9 @@ namespace Dungeon.Json
                 }
 
                 var tilesIds = tiles
-                    .Cast<ExtendedTile>()
-                    .Select(x =>
-                    {
-                        // Map each of our tiles as an int to save space
-                        var key = tilesIdDict.FirstOrDefault(dict => dict.Value == x.GetDictionaryKey()).Key;
-
-                        // Since our rotation has limited possible states that make sense for 2D game with square tiles, we save it as a masked byte
-                        // Skipping value of 0 would save more, but would require changing the way it's serialized, so let's not bother for now
-                        byte rotation = 0b000;
-                        if (x != null)
-                        {
-                            var angles = x.transform.rotation.eulerAngles;
-
-                            if (angles.z.Approximately(90f))
-                                rotation = 0b001;
-                            else if (angles.z.Approximately(180f))
-                                rotation = 0b010;
-                            else if (angles.z.Approximately(270f))
-                                rotation = 0b011;
-
-                            if (angles.y.Approximately(180f))
-                                rotation |= 0b100;
-                        }
-                        
-                        return new { k = key, r = rotation };
-                    })
+                    .Cast<ExtendedRuleTile>()
+                    // Map each of our tiles as an int to save space
+                    .Select(x => tilesIdDict.FirstOrDefault(dict => dict.Value == x.GetDictionaryKey()).Key)
                     .ToArray();
 
                 writer.WritePropertyName("tileIds");

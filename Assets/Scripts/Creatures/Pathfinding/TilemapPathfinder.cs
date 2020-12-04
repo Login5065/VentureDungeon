@@ -2,6 +2,7 @@
 using System.Linq;
 using Dungeon.Extensions;
 using Dungeon.MapSystem;
+using Dungeon.Objects;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.Tilemaps;
@@ -12,7 +13,7 @@ namespace Dungeon.Pathfinding
     {
         private const int defaultPrice = 15;
 
-        public static List<Vector2Int> FindPathToOrBelow(Tilemap tilemap, in Vector3 targetPos, in Vector3 startingPos, in int creatureSize, int maxSearchDistance = int.MaxValue) 
+        public static List<Vector2Int> FindPathToOrBelow(Tilemap tilemap, in Vector3 targetPos, in Vector3 startingPos, in int creatureSize, int maxSearchDistance = int.MaxValue)
             => FindPathToOrBelowInt(tilemap, (Vector2Int)tilemap.WorldToCell(targetPos), (Vector2Int)tilemap.WorldToCell(startingPos), creatureSize, maxSearchDistance);
 
         public static List<Vector2Int> FindPathToOrBelowInt(Tilemap tilemap, Vector2Int targetPos, Vector2Int startingPos, in int creatureSize, int maxSearchDistance = int.MaxValue)
@@ -36,7 +37,7 @@ namespace Dungeon.Pathfinding
             if (!tilemap.cellBounds.Contains((Vector3Int)startingPos))
                 return null;
 
-            if(targetPos == startingPos)
+            if (targetPos == startingPos)
                 return new List<Vector2Int>() { targetPos };
 
             if (!tilemap.cellBounds.Contains((Vector3Int)targetPos))
@@ -102,6 +103,13 @@ namespace Dungeon.Pathfinding
             pos = currentNode.Pos.Down();
             if (!closedSet.ContainsKey(pos) && tilemap.cellBounds.Contains(pos.ToVec3()) && CanStandOn(tilemap, pos) && CanFit(tilemap, pos, creatureSize))
                 yield return new PathfindingNode(pos, currentNode.GeneratedCost + defaultPrice);
+
+            if (ObjectList.placedObjects.TryGetValue(currentNode.Pos, out var obj) && obj is Entry entry && entry.Connection != null)
+            {
+                pos = entry.Connection.GridPosition;
+                if (!closedSet.ContainsKey(pos) && tilemap.cellBounds.Contains(pos.ToVec3()) && CanStandOn(tilemap, pos) && CanFit(tilemap, pos, creatureSize))
+                    yield return new PathfindingNode(pos, currentNode.GeneratedCost + defaultPrice * Mathf.Abs(currentNode.Pos.y - pos.y));
+            }
         }
 
         private static List<Vector2Int> RetracePath(PathfindingNode start, PathfindingNode end)
@@ -126,7 +134,7 @@ namespace Dungeon.Pathfinding
             var currentPos = posToCheck;
             for (var i = 0; i < creatureSize; i++)
             {
-                var tile = tilemap.GetTile<ExtendedTile>(currentPos.ToVec3());
+                var tile = tilemap.GetTile<ExtendedRuleTile>(currentPos.ToVec3());
 
                 if (tile != null && tile.TileData.IsSolid)
                     return false;
@@ -139,7 +147,7 @@ namespace Dungeon.Pathfinding
 
         public static bool CanStandOn(Tilemap tilemap, in Vector2Int posToCheck)
         {
-            var tile = tilemap.GetTile<ExtendedTile>(posToCheck.Down().ToVec3());
+            var tile = tilemap.GetTile<ExtendedRuleTile>(posToCheck.Down().ToVec3());
             return tile != null && tile.TileData.CanStandOn;
         }
 

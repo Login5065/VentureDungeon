@@ -9,6 +9,7 @@ namespace Dungeon.Variables
     {
         public static GridOverlay GridOverlay;
         public static MapManager MapManager;
+        public static TileDictionary TileDictionary;
         public static GameObject UI;
         public static UIManager UIManager;
         public static ArchitectUIManager ArchitectUIManager;
@@ -24,12 +25,15 @@ namespace Dungeon.Variables
         public static Tilemap TileMapFG;
         public static Tilemap TileMapBG;
         public static SelectionBox SelectionBox;
+        public static InventoryUI inventoryUI;
+        public static GameObject LeftMenuInventory;
         void Awake()
         {
             GridOverlay = Camera.main.GetComponent<GridOverlay>();
             UI = GameObject.Find("UI");
             EventSystem = GameObject.Find("EventSystem");
             MapManager = EventSystem.GetComponent<MapManager>();
+            TileDictionary = GameObject.Find("MapSystem").GetComponent<TileDictionary>();
             UIManager = UI.GetComponent<UIManager>();
             ArchitectUIManager = UI.GetComponent<ArchitectUIManager>();
             LeftMenuArchitect = UI.transform.Find("LeftMenuArchitect").gameObject;
@@ -43,6 +47,8 @@ namespace Dungeon.Variables
             TileMapBG = GameObject.Find("TilemapBG").GetComponent<Tilemap>();
             TileMapFG = GameObject.Find("TilemapFG").GetComponent<Tilemap>();
             SelectionBox = EventSystem.GetComponent<SelectionBox>();
+            inventoryUI = UI.GetComponent<InventoryUI>();
+            LeftMenuInventory = UI.transform.Find("LeftMenuInventory").gameObject;
         }
     }
 }

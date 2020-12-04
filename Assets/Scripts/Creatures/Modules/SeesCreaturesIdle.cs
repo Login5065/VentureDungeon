@@ -9,18 +9,17 @@ namespace Dungeon.Creatures
 {
     public class SeesCreaturesIdle : IdleModule
     {
-        private float timeToRecalculatePathToEnemy = 0f;
         public override bool Requirement()
         {
             return (owner.seenCreatures.Count != 0);
         }
         public override bool Idle()
         {
-            if (timeToRecalculatePathToEnemy <= 0)
-                timeToRecalculatePathToEnemy += 0.25f;
+            if (owner.timeToRecalculatePathToEnemy <= 0)
+                owner.timeToRecalculatePathToEnemy += 0.25f;
             else
             {
-                timeToRecalculatePathToEnemy -= Time.deltaTime;
+                owner.timeToRecalculatePathToEnemy -= Time.deltaTime;
                 return owner.isAttacking;
             }
 

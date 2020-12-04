@@ -20,19 +20,19 @@ AnimationClip:
   m_PPtrCurves:
   - curve:
     - time: 0
-      value: {fileID: 21300000, guid: 5b4b5bb559abd044791dedff1b79315e, type: 3}
+      value: {fileID: 21300000, guid: a52c93bd9a6b85f4f86b6d47028563b6, type: 3}
     - time: 0.25
-      value: {fileID: 21300000, guid: 9351e6ac189df5a409a44e7b19fb1308, type: 3}
+      value: {fileID: 21300000, guid: 7729f329f18fc5b41965477e91221c00, type: 3}
     - time: 0.5
-      value: {fileID: 21300000, guid: 41a89ec87611d144ba345dde9f14eb7f, type: 3}
+      value: {fileID: 21300000, guid: b7b6be607c4089f4d8630192f9d09f0e, type: 3}
     - time: 0.75
-      value: {fileID: 21300000, guid: 5582bd9b3b2d30041aa476896aca6576, type: 3}
+      value: {fileID: 21300000, guid: 40ad2c3f01d07254988e7834b00a8a38, type: 3}
     - time: 1
-      value: {fileID: 21300000, guid: ad356ffa6d5fb044faa7b7a6441a601b, type: 3}
+      value: {fileID: 21300000, guid: 909f938d7b7c8444681bdf98a53495d7, type: 3}
     - time: 1.25
-      value: {fileID: 21300000, guid: bad448c2c13a09947a747764808348b7, type: 3}
+      value: {fileID: 21300000, guid: c95eeb0e81086be469827cbc2e782ece, type: 3}
     - time: 1.5
-      value: {fileID: 21300000, guid: 5b4b5bb559abd044791dedff1b79315e, type: 3}
+      value: {fileID: 21300000, guid: a52c93bd9a6b85f4f86b6d47028563b6, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
@@ -52,13 +52,13 @@ AnimationClip:
       customType: 23
       isPPtrCurve: 1
     pptrCurveMapping:
-    - {fileID: 21300000, guid: 5b4b5bb559abd044791dedff1b79315e, type: 3}
-    - {fileID: 21300000, guid: 9351e6ac189df5a409a44e7b19fb1308, type: 3}
-    - {fileID: 21300000, guid: 41a89ec87611d144ba345dde9f14eb7f, type: 3}
-    - {fileID: 21300000, guid: 5582bd9b3b2d30041aa476896aca6576, type: 3}
-    - {fileID: 21300000, guid: ad356ffa6d5fb044faa7b7a6441a601b, type: 3}
-    - {fileID: 21300000, guid: bad448c2c13a09947a747764808348b7, type: 3}
-    - {fileID: 21300000, guid: 5b4b5bb559abd044791dedff1b79315e, type: 3}
+    - {fileID: 21300000, guid: a52c93bd9a6b85f4f86b6d47028563b6, type: 3}
+    - {fileID: 21300000, guid: 7729f329f18fc5b41965477e91221c00, type: 3}
+    - {fileID: 21300000, guid: b7b6be607c4089f4d8630192f9d09f0e, type: 3}
+    - {fileID: 21300000, guid: 40ad2c3f01d07254988e7834b00a8a38, type: 3}
+    - {fileID: 21300000, guid: 909f938d7b7c8444681bdf98a53495d7, type: 3}
+    - {fileID: 21300000, guid: c95eeb0e81086be469827cbc2e782ece, type: 3}
+    - {fileID: 21300000, guid: a52c93bd9a6b85f4f86b6d47028563b6, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
@@ -84,8 +84,22 @@ AnimationClip:
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
   m_Events:
-  - time: 1
+  - time: 0
+    functionName: Busy
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.25
     functionName: Bonk
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 1.5
+    functionName: EndBusy
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
