@@ -26,7 +26,7 @@ namespace Dungeon.UI
                 {
                     var toSell = new List<PlaceableObject>();
 
-                    foreach (var sellable in ObjectList.placedObjects.Values)
+                    foreach (var sellable in ObjectManager.register.Values)
                     {
                         if (sellable.CanSell && rect.Contains(sellable.GridPosition))
                             toSell.Add(sellable);
@@ -35,7 +35,7 @@ namespace Dungeon.UI
                     foreach (var sellable in toSell)
                     {
                         totalValue += sellable.GoldValue;
-                        sellable.Destroy();
+                        ObjectManager.KillObject(sellable);
                     }
                 }
 

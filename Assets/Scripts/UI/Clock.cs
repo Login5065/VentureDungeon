@@ -11,7 +11,7 @@ public class Clock : MonoBehaviour
         {
             var dateTime = System.DateTime.Now;
             text.text = $"{dateTime.Hour:00}:{dateTime.Minute:00}";
-            yield return new WaitForSeconds(0.2f); 
+            yield return new WaitForSeconds(1f); 
         }
     }
     

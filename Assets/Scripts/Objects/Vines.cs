@@ -39,11 +39,7 @@ namespace Dungeon.Objects
             {
                 if (isActive)
                 {
-                    for (int i = 0; i < secondsToLetGo; i++)
-                    {
-                        victim.path = null;
-                        yield return new WaitForSeconds(1);
-                    }
+                    yield return new WaitForSeconds(secondsToLetGo);
                     isActive = false;
                 }
                 yield return new WaitForSeconds(1);

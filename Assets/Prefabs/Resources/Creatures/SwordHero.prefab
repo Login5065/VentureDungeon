@@ -68,9 +68,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 5
+  m_SortingLayerID: 1081470473
+  m_SortingLayer: 4
+  m_SortingOrder: 2000
   m_Sprite: {fileID: 21300000, guid: 4a30a42770f33484d93a677e4fe6a622, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -188,6 +188,7 @@ GameObject:
   - component: {fileID: 5772401012438809525}
   - component: {fileID: 5772401012438809524}
   - component: {fileID: 5772401012438809523}
+  - component: {fileID: 6650912550959221361}
   m_Layer: 0
   m_Name: SwordHero
   m_TagString: ItemsIgnore
@@ -208,7 +209,6 @@ Transform:
   m_Children:
   - {fileID: 4723813692715451473}
   - {fileID: 7474973116287816740}
-  - {fileID: 38199217514832321}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -251,7 +251,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 1000
   m_Sprite: {fileID: 21300000, guid: 825c4d09e921aab4385ce618d1215721, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -275,20 +275,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0b62588642af224199b0f64bc9e90db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  material: {fileID: 0}
-  hpmaterial: {fileID: 0}
-  animator: {fileID: 0}
-  impact: {fileID: 8300000, guid: 741b2bde13bd89d4b87708a019bb906c, type: 3}
-  HPBar: {fileID: 0}
-  sightCollider: {fileID: 0}
-  hitBox: {fileID: 0}
-  sightColliderRB: {fileID: 0}
-  closestCreature: {fileID: 0}
-  moveOrder: {fileID: 0}
-  lastPosition: {x: 0, y: 0, z: 0}
-  path: []
-  idleBacktrackPath: []
-  spawnerObject: {fileID: 0}
   hpbaroffset: 0.9
   height: 2
   width: 1
@@ -298,28 +284,38 @@ MonoBehaviour:
   resource: 0
   armor: 0
   speed: 1
-  sightRange: 3
-  timeToRecalculatePathToTreasure: 5
-  timeToRecalculatePathToEnemy: 0
-  idleTimer: 3
-  attackRange: 1
+  sightRange: 10
   type: 3
-  resourceType: 0
-  carriedGold: 0
-  carriedGoldTarget: 0
   value: 100
-  creatureCost: 0
+  creatureCost: 10
+  maxAttackPriority: 0
+  attackPriority: 0
   dying: 0
-  selected: 0
   controllable: 0
   allegiance: 1
   hasSight: 1
   shouldBeSeen: 1
   isAttacking: 0
-  attackFound: 0
-  idleFound: 0
   busy: 0
+  seeksTreasure: 1
+  canIdle: 1
+  moving: 0
+  path: []
+  ai: {fileID: 0}
+  material: {fileID: 0}
+  hpmaterial: {fileID: 0}
+  outerhpmaterial: {fileID: 0}
+  animator: {fileID: 0}
+  impact: {fileID: 8300000, guid: 741b2bde13bd89d4b87708a019bb906c, type: 3}
+  HPBar: {fileID: 0}
+  hitBox: {fileID: 0}
+  closestCreature: {fileID: 0}
+  moveOrder: {fileID: 0}
+  lastPosition: {x: 0, y: 0, z: 0}
+  anchor: {x: 0, y: 0}
+  spawnerObject: {fileID: 0}
   selectcolor: {r: 0, g: 1, b: 0, a: 1}
+  chosenAttack: {fileID: 0}
 --- !u!95 &5772401012438809524
 Animator:
   serializedVersion: 3
@@ -435,155 +431,46 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
---- !u!1 &6100365016020789819
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 38199217514832321}
-  - component: {fileID: 2392041219619999142}
-  - component: {fileID: 2362255751668425172}
-  - component: {fileID: 5390904957562204158}
-  - component: {fileID: 4766516430612208490}
-  - component: {fileID: 4142461957927931094}
-  - component: {fileID: 8293968186233995156}
-  - component: {fileID: 2053930466728942441}
-  m_Layer: 0
-  m_Name: IdleModules
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &38199217514832321
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6100365016020789819}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 5772401012438809526}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2392041219619999142
+--- !u!114 &6650912550959221361
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6100365016020789819}
-  m_Enabled: 1
+  m_GameObject: {fileID: 5772401012438809416}
+  m_Enabled: 0
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 96f5d120043be924c99c88381a91d0ea, type: 3}
+  m_Script: {fileID: 11500000, guid: 8d7b55c7ecdb49a4a89fa5e6f9022861, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  owner: {fileID: 0}
-  priority: 7
-  chance: 100
-  tried: 0
---- !u!114 &2362255751668425172
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6100365016020789819}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0176d76b57a569e4e9f6e77f0c0a09ba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  owner: {fileID: 0}
-  priority: 6
-  chance: 100
-  tried: 0
---- !u!114 &5390904957562204158
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6100365016020789819}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 887f68b41d9ae6e42bd21b04bd7a196a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  owner: {fileID: 0}
-  priority: 5
-  chance: 100
-  tried: 0
---- !u!114 &4766516430612208490
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6100365016020789819}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ef3e3787d9ad3b44fae5a766cddc3a6a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  owner: {fileID: 0}
-  priority: 4
-  chance: 100
-  tried: 0
---- !u!114 &4142461957927931094
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6100365016020789819}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: add4f13165c927442a91274f30d87390, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  owner: {fileID: 0}
-  priority: 3
-  chance: 100
-  tried: 0
---- !u!114 &8293968186233995156
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6100365016020789819}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a2b450c3fd89d8b4a91998c181078ca4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  owner: {fileID: 0}
-  priority: 2
-  chance: 100
-  tried: 0
---- !u!114 &2053930466728942441
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6100365016020789819}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 230e04459f5a7d741a660a0cc9a252e2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  owner: {fileID: 0}
-  priority: 1
-  chance: 100
-  tried: 0
+  startWhenEnabled: 1
+  asynchronousLoad: 0
+  pauseWhenDisabled: 1
+  restartWhenComplete: 1
+  logTaskChanges: 0
+  group: 0
+  resetValuesOnRestart: 0
+  externalBehavior: {fileID: 11400000, guid: 045a808f9df04554e92d9906082b18d5, type: 2}
+  mBehaviorSource:
+    behaviorName: Behavior
+    behaviorDescription: 
+    mTaskData:
+      types: []
+      parentIndex: 
+      startIndex: 
+      variableStartIndex: 00000000
+      JSONSerialization: 
+      fieldSerializationData:
+        typeName: []
+        fieldNameHash: f9be55564aaa52567707a104
+        startIndex: 000000000100000002000000
+        dataPosition: 000000002900000031000000
+        unityObjects: []
+        byteData: 4265686176696f7244657369676e65722e52756e74696d652e53686172656447616d654f626a656374637265617475726501
+        byteDataArray: 4265686176696f7244657369676e65722e52756e74696d652e53686172656447616d654f626a656374637265617475726501
+      Version: 1.6.5
+  gizmoViewMode: 2
+  showBehaviorDesignerGizmo: 1
 --- !u!1 &9031865370454890660
 GameObject:
   m_ObjectHideFlags: 0
@@ -653,9 +540,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 6
+  m_SortingLayerID: 1081470473
+  m_SortingLayer: 4
+  m_SortingOrder: 3000
   m_Sprite: {fileID: 21300000, guid: 5f05e8184cfb59847bd332f7aff6f676, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

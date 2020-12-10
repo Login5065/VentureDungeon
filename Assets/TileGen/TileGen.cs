@@ -1,12 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEditorInternal;
 using UnityEditor;
 using System.IO;
 using UnityEngine.UI;
 
-
+#if (UNITY_EDITOR) 
 [System.Serializable]
 public class SpriteProcessor : AssetPostprocessor
 {
@@ -1451,3 +1450,5 @@ public class TileGen : MonoBehaviour
     }
     
 }
+
+#endif

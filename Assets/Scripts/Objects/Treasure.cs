@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-
-namespace Dungeon.Objects
+﻿namespace Dungeon.Objects
 {
     public class Treasure : PlaceableObject
     {
@@ -8,9 +6,5 @@ namespace Dungeon.Objects
         public int maxGold;
         public override bool CanSell => true;
         public override int GoldValue => currentGold;
-        public void Awake()
-        {
-            Variables.GameData.gameStarted = true;
-        }
     }
 }

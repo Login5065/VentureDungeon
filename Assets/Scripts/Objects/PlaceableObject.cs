@@ -1,4 +1,5 @@
 ﻿using Dungeon.Scripts;
+using Dungeon.Variables;
 using UnityEngine;
 
 namespace Dungeon.Objects
@@ -12,17 +13,12 @@ namespace Dungeon.Objects
         public virtual Vector2Int GridPosition { get => gridPosition; set => gridPosition = value; }
         public abstract bool CanSell { get; }
         public abstract int GoldValue { get; }
+        public bool floating = false;
 
         public virtual void Start()
         {
             if (setupOnGameStartup)
-                ObjectList.placedObjects.Add(gridPosition, this);
-        }
-
-        public virtual void Destroy()
-        {
-            ObjectList.placedObjects.Remove(GridPosition);
-            Destroy(gameObject);
+                ObjectManager.register.Add(gridPosition, this);
         }
     }
 }

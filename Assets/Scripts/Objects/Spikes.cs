@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Dungeon.Creatures;
+using Dungeon.Variables;
 
 namespace Dungeon.Objects
 {
@@ -49,8 +50,7 @@ namespace Dungeon.Objects
                 toremove.Clear();
                 if (currentUses <= 0)
                 {
-                    this.Destroy();
-                    //Destroy(this.gameObject);
+                    ObjectManager.KillObject(this);
                     yield break;
                 }
                 yield return new WaitForSeconds(secondsToDamage);

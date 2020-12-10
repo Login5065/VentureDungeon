@@ -3,6 +3,7 @@ using System.Linq;
 using Dungeon.Extensions;
 using Dungeon.MapSystem;
 using Dungeon.Objects;
+using Dungeon.Variables;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.Tilemaps;
@@ -104,11 +105,16 @@ namespace Dungeon.Pathfinding
             if (!closedSet.ContainsKey(pos) && tilemap.cellBounds.Contains(pos.ToVec3()) && CanStandOn(tilemap, pos) && CanFit(tilemap, pos, creatureSize))
                 yield return new PathfindingNode(pos, currentNode.GeneratedCost + defaultPrice);
 
-            if (ObjectList.placedObjects.TryGetValue(currentNode.Pos, out var obj) && obj is Entry entry && entry.Connection != null)
+            if (ObjectManager.register.TryGetValue(currentNode.Pos, out var obj) && obj is Entry entry && entry.Connections != null)
             {
-                pos = entry.Connection.GridPosition;
-                if (!closedSet.ContainsKey(pos) && tilemap.cellBounds.Contains(pos.ToVec3()) && CanStandOn(tilemap, pos) && CanFit(tilemap, pos, creatureSize))
-                    yield return new PathfindingNode(pos, currentNode.GeneratedCost + defaultPrice * Mathf.Abs(currentNode.Pos.y - pos.y));
+                foreach (var connection in entry.Connections)
+                {
+                    pos = connection.GridPosition;
+                    if (pos == currentNode)
+                        continue;
+                    if (!closedSet.ContainsKey(pos) && tilemap.cellBounds.Contains(pos.ToVec3()) && CanStandOn(tilemap, pos) && CanFit(tilemap, pos, creatureSize))
+                        yield return new PathfindingNode(pos, currentNode.GeneratedCost + defaultPrice * Mathf.Abs(currentNode.Pos.y - pos.y));
+                }
             }
         }
 

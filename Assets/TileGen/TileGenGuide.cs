@@ -1,9 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEditor;
-using System.IO;
+﻿using UnityEngine;
 using UnityEngine.UI;
+
+
+#if (UNITY_EDITOR) 
 public class TileGenGuide : MonoBehaviour
 {
     public bool debug = false;
@@ -134,3 +133,5 @@ public class TileGenGuide : MonoBehaviour
 
    
 }
+
+#endif

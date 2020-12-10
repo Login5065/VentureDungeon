@@ -1,120 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &2387213178257849614
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 5903078982849183443}
-  - component: {fileID: 5135179328086669021}
-  - component: {fileID: 1785286195695884607}
-  - component: {fileID: 6240541562897942971}
-  - component: {fileID: 3768060350270619024}
-  - component: {fileID: 6733703624267966590}
-  m_Layer: 0
-  m_Name: IdleModules
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &5903078982849183443
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2387213178257849614}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.16819353, y: 0.1309137, z: -0.22813241}
-  m_LocalScale: {x: 0.25, y: 0.25, z: 0.25}
-  m_Children: []
-  m_Father: {fileID: 3272866811356469548}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5135179328086669021
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2387213178257849614}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 96f5d120043be924c99c88381a91d0ea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  owner: {fileID: 0}
-  priority: 5
-  chance: 100
-  tried: 0
---- !u!114 &1785286195695884607
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2387213178257849614}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0176d76b57a569e4e9f6e77f0c0a09ba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  owner: {fileID: 0}
-  priority: 4
-  chance: 100
-  tried: 0
---- !u!114 &6240541562897942971
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2387213178257849614}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: add4f13165c927442a91274f30d87390, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  owner: {fileID: 0}
-  priority: 3
-  chance: 100
-  tried: 0
---- !u!114 &3768060350270619024
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2387213178257849614}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a2b450c3fd89d8b4a91998c181078ca4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  owner: {fileID: 0}
-  priority: 2
-  chance: 100
-  tried: 0
---- !u!114 &6733703624267966590
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2387213178257849614}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 230e04459f5a7d741a660a0cc9a252e2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  owner: {fileID: 0}
-  priority: 1
-  chance: 100
-  tried: 0
 --- !u!1 &3272866810643057099
 GameObject:
   m_ObjectHideFlags: 0
@@ -183,9 +68,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 5
+  m_SortingLayerID: 1081470473
+  m_SortingLayer: 4
+  m_SortingOrder: 2000
   m_Sprite: {fileID: 21300000, guid: 4a30a42770f33484d93a677e4fe6a622, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -210,6 +95,7 @@ GameObject:
   - component: {fileID: 3272866811356469549}
   - component: {fileID: 3272866811356469550}
   - component: {fileID: 3272866811356469551}
+  - component: {fileID: 2599138718815742050}
   m_Layer: 0
   m_Name: AxeSkeleton
   m_TagString: ItemsIgnore
@@ -230,7 +116,6 @@ Transform:
   m_Children:
   - {fileID: 3272866811634080421}
   - {fileID: 8993083779247207460}
-  - {fileID: 5903078982849183443}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -273,7 +158,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 1000
   m_Sprite: {fileID: 21300000, guid: ce1c35c33d15fb54a91f121d9267d6d2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -297,20 +182,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0b62588642af224199b0f64bc9e90db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  material: {fileID: 0}
-  hpmaterial: {fileID: 0}
-  animator: {fileID: 0}
-  impact: {fileID: 8300000, guid: 741b2bde13bd89d4b87708a019bb906c, type: 3}
-  HPBar: {fileID: 0}
-  sightCollider: {fileID: 0}
-  hitBox: {fileID: 0}
-  sightColliderRB: {fileID: 0}
-  closestCreature: {fileID: 0}
-  moveOrder: {fileID: 0}
-  lastPosition: {x: 0, y: 0, z: 0}
-  path: []
-  idleBacktrackPath: []
-  spawnerObject: {fileID: 0}
   hpbaroffset: 0.9
   height: 3
   width: 2
@@ -320,27 +191,37 @@ MonoBehaviour:
   resource: 0
   armor: 0
   speed: 1
-  sightRange: 3
-  timeToRecalculatePathToTreasure: 10
-  timeToRecalculatePathToEnemy: 0
-  idleTimer: 3
-  attackRange: 2
+  sightRange: 10
   type: 2
-  resourceType: 0
-  carriedGold: 0
-  carriedGoldTarget: 0
   value: 0
   creatureCost: 0
+  maxAttackPriority: 0
+  attackPriority: 0
   dying: 0
-  selected: 0
   controllable: 1
   allegiance: 0
   hasSight: 1
   shouldBeSeen: 1
   isAttacking: 0
-  attackFound: 0
-  idleFound: 0
   busy: 0
+  seeksTreasure: 0
+  canIdle: 1
+  moving: 0
+  path: []
+  material: {fileID: 0}
+  hpmaterial: {fileID: 0}
+  outerhpmaterial: {fileID: 0}
+  animator: {fileID: 0}
+  impact: {fileID: 8300000, guid: 741b2bde13bd89d4b87708a019bb906c, type: 3}
+  HPBar: {fileID: 0}
+  hitBox: {fileID: 0}
+  closestCreature: {fileID: 0}
+  moveOrder: {fileID: 0}
+  lastPosition: {x: 0, y: 0, z: 0}
+  anchor: {x: 0, y: 0}
+  spawnerObject: {fileID: 0}
+  selectcolor: {r: 1, g: 0, b: 0, a: 1}
+  chosenAttack: {fileID: 0}
 --- !u!95 &3272866811356469550
 Animator:
   serializedVersion: 3
@@ -456,6 +337,46 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
+--- !u!114 &2599138718815742050
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3272866811356469538}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d7b55c7ecdb49a4a89fa5e6f9022861, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startWhenEnabled: 1
+  asynchronousLoad: 0
+  pauseWhenDisabled: 1
+  restartWhenComplete: 1
+  logTaskChanges: 0
+  group: 0
+  resetValuesOnRestart: 0
+  externalBehavior: {fileID: 11400000, guid: 045a808f9df04554e92d9906082b18d5, type: 2}
+  mBehaviorSource:
+    behaviorName: Behavior
+    behaviorDescription: 
+    mTaskData:
+      types: []
+      parentIndex: 
+      startIndex: 
+      variableStartIndex: 
+      JSONSerialization: 
+      fieldSerializationData:
+        typeName: []
+        fieldNameHash: 
+        startIndex: 
+        dataPosition: 
+        unityObjects: []
+        byteData: 
+        byteDataArray: 
+      Version: 
+  gizmoViewMode: 2
+  showBehaviorDesignerGizmo: 1
 --- !u!1 &3272866811634080443
 GameObject:
   m_ObjectHideFlags: 0
@@ -525,9 +446,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 6
+  m_SortingLayerID: 1081470473
+  m_SortingLayer: 4
+  m_SortingOrder: 3000
   m_Sprite: {fileID: 21300000, guid: 5f05e8184cfb59847bd332f7aff6f676, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

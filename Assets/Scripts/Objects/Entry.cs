@@ -1,5 +1,7 @@
-﻿using System;
-using UnityEngine;
+﻿using Dungeon.Variables;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Dungeon.Objects
 {
@@ -8,30 +10,52 @@ namespace Dungeon.Objects
         public override bool CanSell => false;
         public override int GoldValue => 0;
 
-        [SerializeReference]
-        protected GameObject connectedGameObject = null;
-        public Entry Connection { get; protected set; }
+        public HashSet<Entry> Connections { get; protected set; } = null;
 
-        public Entry() { }
-
-        public Entry(Entry connection)
+        public override void Start()
         {
-            if (connection == this)
-                throw new ArgumentException("Can't connect an entry to itself", nameof(connection));
-            else if (connection.GridPosition == GridPosition)
-                throw new ArgumentException("Can't place both entries in the same spot", nameof(connection));
-
-            Connection = connection;
-            connection.Connection = this;
+            base.Start();
+            ClearAndSetupConnections();
         }
 
-        public void Awake()
+        protected void ClearAndSetupConnections()
         {
-            if (Connection == null && connectedGameObject != null && connectedGameObject.TryGetComponent<Entry>(out var connected))
+            if (Connections != null)
+                return;
+
+            var connections = ObjectManager.register.Values.OfType<Entry>().Where(x => x.GridPosition.x == GridPosition.x);
+
+            if (!connections.Contains(this))
+                throw new Exception($"The list of placed objects does not contain this object on x=({GridPosition.x})!");
+            if (connections.Count() == 1)
             {
-                Connection = connected;
-                connected.Connection = this;
+                Connections = new HashSet<Entry>
+                {
+                    this,
+                };
+                return;
             }
+
+            var valuesWithLists = connections.Where(x => x.Connections != null);
+
+            HashSet<Entry> entryList;
+
+            if (valuesWithLists.Count() > 0)
+                entryList = valuesWithLists.First().Connections;
+            else
+                entryList = new HashSet<Entry>();
+
+            foreach (var connection in connections)
+            {
+                connection.Connections = entryList;
+                connection.Connections.Add(connection);
+            }
+        }
+
+        public void RemoveFromConnections()
+        {
+            if (Connections != null)
+                Connections.Remove(this);
         }
     }
 }

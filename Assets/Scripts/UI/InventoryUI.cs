@@ -27,10 +27,9 @@ namespace Dungeon.UI
         {
             InventoryList = new List<Button>();
             inventory = new Inventory();
-            InventoryContainer = Statics.LeftMenuInventory;
+            InventoryContainer = gameObject;
             RefreshInventoryItems();
             z = 0;
-
         }
 
         public void RefreshInventoryItems()
@@ -121,7 +120,6 @@ namespace Dungeon.UI
             var mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             mousePos.z = 0;
             var tilePos = mousePos;
-            var tile = tilePos;
             HandleGhost(tilePos, true);
             if (place)
             {

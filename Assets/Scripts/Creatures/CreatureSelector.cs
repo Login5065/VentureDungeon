@@ -9,16 +9,18 @@ using System;
 public class CreatureSelector : MonoBehaviour
 {
     public static GameObject SelectedUI;
+    public static Text SelectedName;
     private readonly List<GameObject> MonsterIcons = new List<GameObject>();
     // Start is called before the first frame update
     void Start()
     {
-        SelectedUI = gameObject.transform.Find("Selected").gameObject;
+        SelectedUI = Instantiate(Resources.Load<GameObject>("UI/Selected"), Statics.UI.transform, false);
         foreach (var item in Enum.GetNames(typeof(Register.MonsterTypes)))
         {
             MonsterIcons.Add(SelectedUI.transform.Find("Image Wrap").Find(item).gameObject);
         }
         SelectedUI.SetActive(false);
+        SelectedName = SelectedUI.transform.Find("Name").GetComponent<Text>();
     }
 
     // Update is called once per frame
@@ -70,7 +72,7 @@ public class CreatureSelector : MonoBehaviour
                     Statics.UIManager.SelectedCreature.material.AddOperation(0.0f, "_OutlineAlpha", 1.0f, 0.6f);
                     Statics.UIManager.mode = (int)UIManager.UIModes.Move;
                     SelectedUI.SetActive(true);
-                    UIManager.SelectedName.text = Register.MonsterNames[Statics.UIManager.SelectedCreature.type];
+                    SelectedName.text = Register.MonsterNames[Statics.UIManager.SelectedCreature.type];
                     foreach (GameObject icon in MonsterIcons)
                     {
                         icon.SetActive(false);
@@ -86,7 +88,7 @@ public class CreatureSelector : MonoBehaviour
                         Statics.UIManager.SelectedCreature = null;
                     }
                     Statics.UIManager.mode = (int)UIManager.UIModes.None;
-                    UIManager.SelectedName.text = "-";
+                    SelectedName.text = "-";
                     SelectedUI.SetActive(false);
                 }
             }
