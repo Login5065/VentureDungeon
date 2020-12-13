@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8383231126244227754}
   - component: {fileID: 8383231126244227752}
   - component: {fileID: 8383231126244227753}
+  - component: {fileID: 3210122664074234291}
   m_Layer: 5
   m_Name: GoldAmount
   m_TagString: Untagged
@@ -30,7 +31,7 @@ RectTransform:
   m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
   m_Children: []
   m_Father: {fileID: 8383231127974011906}
-  m_RootOrder: 1
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -79,6 +80,27 @@ MonoBehaviour:
     m_VerticalOverflow: 1
     m_LineSpacing: 1
   m_Text: 1000
+--- !u!114 &3210122664074234291
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8383231126244227755}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 537e10be3ce189d47baf06d7b8d41d65, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  instanceName: Tooltip
+  showBackground: 1
+  width: 260
+  color: {r: 1, g: 1, b: 1, a: 1}
+  tooltipTitle: Gold
+  tooltip: The standard measure of value on your server, useful for construction,
+    wages, and more.
+  icon: {fileID: 0}
+  properties: []
 --- !u!1 &8383231126278927258
 GameObject:
   m_ObjectHideFlags: 0
@@ -90,6 +112,7 @@ GameObject:
   - component: {fileID: 8383231126278927257}
   - component: {fileID: 8383231126278927239}
   - component: {fileID: 8383231126278927256}
+  - component: {fileID: 6043527066192496156}
   m_Layer: 5
   m_Name: ThreatIcon
   m_TagString: Untagged
@@ -109,7 +132,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 2}
   m_Children: []
   m_Father: {fileID: 8383231127974011906}
-  m_RootOrder: 4
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -154,6 +177,27 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &6043527066192496156
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8383231126278927258}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 537e10be3ce189d47baf06d7b8d41d65, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  instanceName: Tooltip
+  showBackground: 1
+  width: 260
+  color: {r: 1, g: 1, b: 1, a: 1}
+  tooltipTitle: Threat
+  tooltip: Threat is a measure of the presumed level of difficulty of your dungeon.
+    The higher it is, the better equipped and levelled up heroes will be.
+  icon: {fileID: 0}
+  properties: []
 --- !u!1 &8383231127446432854
 GameObject:
   m_ObjectHideFlags: 0
@@ -165,6 +209,7 @@ GameObject:
   - component: {fileID: 8383231127446432853}
   - component: {fileID: 8383231127446432851}
   - component: {fileID: 8383231127446432852}
+  - component: {fileID: 5282030803270136227}
   m_Layer: 5
   m_Name: FameIcon
   m_TagString: Untagged
@@ -184,7 +229,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 2}
   m_Children: []
   m_Father: {fileID: 8383231127974011906}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -229,6 +274,27 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &5282030803270136227
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8383231127446432854}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 537e10be3ce189d47baf06d7b8d41d65, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  instanceName: Tooltip
+  showBackground: 1
+  width: 260
+  color: {r: 1, g: 1, b: 1, a: 1}
+  tooltipTitle: Fame
+  tooltip: Fame is a measure of the popularity of your dungeon - the higher it is,
+    the more heroes come.
+  icon: {fileID: 0}
+  properties: []
 --- !u!1 &8383231127743846442
 GameObject:
   m_ObjectHideFlags: 0
@@ -240,6 +306,7 @@ GameObject:
   - component: {fileID: 8383231127743846441}
   - component: {fileID: 8383231127743846423}
   - component: {fileID: 8383231127743846440}
+  - component: {fileID: 4037616134840483943}
   m_Layer: 5
   m_Name: GoldIcon
   m_TagString: Untagged
@@ -304,6 +371,27 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &4037616134840483943
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8383231127743846442}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 537e10be3ce189d47baf06d7b8d41d65, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  instanceName: Tooltip
+  showBackground: 1
+  width: 260
+  color: {r: 1, g: 1, b: 1, a: 1}
+  tooltipTitle: Gold
+  tooltip: The standard measure of value on your server, useful for construction,
+    wages, and more.
+  icon: {fileID: 0}
+  properties: []
 --- !u!1 &8383231127974011907
 GameObject:
   m_ObjectHideFlags: 0
@@ -335,10 +423,10 @@ RectTransform:
   m_LocalScale: {x: 0.7, y: 0.7, z: 1}
   m_Children:
   - {fileID: 8383231127743846441}
-  - {fileID: 8383231126244227754}
   - {fileID: 8383231127446432853}
-  - {fileID: 8383231128104356208}
   - {fileID: 8383231126278927257}
+  - {fileID: 8383231126244227754}
+  - {fileID: 8383231128104356208}
   - {fileID: 8383231128050157818}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -488,6 +576,7 @@ GameObject:
   - component: {fileID: 8383231128104356208}
   - component: {fileID: 8383231128104356222}
   - component: {fileID: 8383231128104356223}
+  - component: {fileID: 2795272629323190115}
   m_Layer: 5
   m_Name: FameAmount
   m_TagString: Untagged
@@ -507,7 +596,7 @@ RectTransform:
   m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
   m_Children: []
   m_Father: {fileID: 8383231127974011906}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -556,3 +645,24 @@ MonoBehaviour:
     m_VerticalOverflow: 1
     m_LineSpacing: 1
   m_Text: 100
+--- !u!114 &2795272629323190115
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8383231128104356209}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 537e10be3ce189d47baf06d7b8d41d65, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  instanceName: Tooltip
+  showBackground: 1
+  width: 260
+  color: {r: 1, g: 1, b: 1, a: 1}
+  tooltipTitle: Fame
+  tooltip: Fame is a measure of the popularity of your dungeon - the higher it is,
+    the more heroes come.
+  icon: {fileID: 0}
+  properties: []

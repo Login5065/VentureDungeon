@@ -32,7 +32,6 @@ namespace Dungeon.Variables
                 if (value < 0) fame = 0;
                 else fame = value;
                 UI.ResourcesUIManager.FameText.text = fame.ToString();
-                Creatures.CreatureSpawner.mainSpawnCooldown = 3000/fame;
             }
         }
         public static int threat = 0;

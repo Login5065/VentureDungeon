@@ -69,6 +69,8 @@ public class CreatureSelector : MonoBehaviour
                         Statics.UIManager.SelectedCreature = null;
                     }
                     Statics.UIManager.SelectedCreature = hit.collider.gameObject.GetComponent<Creature>();
+                    if (Statics.UIManager.SelectedCreature.allegiance) CursorManager.SetCursor("Green");
+                    else CursorManager.SetCursor("Red");
                     Statics.UIManager.SelectedCreature.material.AddOperation(0.0f, "_OutlineAlpha", 1.0f, 0.6f);
                     Statics.UIManager.mode = (int)UIManager.UIModes.Move;
                     SelectedUI.SetActive(true);
@@ -82,6 +84,7 @@ public class CreatureSelector : MonoBehaviour
                 }
                 else if (Statics.UIManager.mode == (int)UIManager.UIModes.Move)
                 {
+                    CursorManager.SetCursor("White");
                     if (Statics.UIManager.SelectedCreature != null)
                     {
                         Statics.UIManager.SelectedCreature.material.AddOperation(0.6f, "_OutlineAlpha", 1.0f, 0.0f);

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Dungeon.Graphics;
+using UnityEngine;
 
 namespace Dungeon.Objects
 {
@@ -6,6 +7,7 @@ namespace Dungeon.Objects
     {
         [SerializeReference]
         private Sprite[] possibleSprites;
+        ShaderEffects mat;
 
         private void Start() => RandomizeSpriteBasedOnPos();
 
@@ -26,6 +28,8 @@ namespace Dungeon.Objects
 
                 Random.InitState(obj.GridPosition.GetHashCode()); // Set seed based on object grid position
                 sprite.sprite = possibleSprites[Random.Range(0, possibleSprites.Length)];
+                mat = gameObject.AddComponent<ShaderEffects>();
+                mat.AddOperation(0, "_GrassSpeed", 1, 8.0f);
 
                 Random.state = oldState; // Restore old state
                 return true;

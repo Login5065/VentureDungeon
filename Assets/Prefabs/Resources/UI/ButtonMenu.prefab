@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5210546215986410357}
   - component: {fileID: 5210546215986410346}
   - component: {fileID: 5210546215986410359}
+  - component: {fileID: 8572209825840474119}
   m_Layer: 5
   m_Name: ButtonMenu
   m_TagString: Untagged
@@ -151,6 +152,26 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+--- !u!114 &8572209825840474119
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5210546215986410344}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 537e10be3ce189d47baf06d7b8d41d65, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  instanceName: Tooltip
+  showBackground: 1
+  width: 260
+  color: {r: 1, g: 1, b: 1, a: 1}
+  tooltipTitle: Menu Tab
+  tooltip: Some basic menu options can be found here.
+  icon: {fileID: 0}
+  properties: []
 --- !u!1 &5210546216146068562
 GameObject:
   m_ObjectHideFlags: 0

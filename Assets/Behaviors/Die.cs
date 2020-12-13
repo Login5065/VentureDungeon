@@ -12,7 +12,10 @@ public class Die : Action
 
     public override TaskStatus OnUpdate()
     {
-        CreatureManager.KillCreature(creature);
+        if (!creature.dying)
+        {
+            CreatureManager.KillCreature(creature);
+        }
         return TaskStatus.Success;
     }
 }

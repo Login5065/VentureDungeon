@@ -24,6 +24,7 @@ namespace Dungeon.Creatures
         }
         public override bool ExecuteBonk()
         {
+            owner.audioSource.PlayOneShot(soundEffect);
             void EndBonk()
             {
                 owner.seenCreatures.Remove(owner.closestCreature);

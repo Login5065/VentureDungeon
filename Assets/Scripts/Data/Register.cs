@@ -15,7 +15,8 @@ namespace Dungeon.Variables
             SwordHero,
             BowHero,
             SpearHero,
-            Dragon
+            Dragon,
+            Kobold
         }
         public static List<string> MonsterNames = new List<string>()
         {
@@ -25,7 +26,8 @@ namespace Dungeon.Variables
             "Sword Hero",
             "Bow Hero",
             "Spear Hero",
-            "Black Dragon"
+            "Black Dragon",
+            "Kobold"
         };
         public enum TileTypes
         {
@@ -45,7 +47,7 @@ namespace Dungeon.Variables
             Spikes,
             Vines,
             Lava,
-            Mine,
+            Explosive,
             Torch,
             Entry
         }

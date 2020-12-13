@@ -6,6 +6,7 @@ using Dungeon.Scripts;
 using Dungeon.Graphics;
 using BehaviorDesigner.Runtime.Tasks;
 using BehaviorDesigner.Runtime;
+using Dungeon.Audio;
 
 namespace Dungeon.Creatures
 {
@@ -52,7 +53,7 @@ namespace Dungeon.Creatures
                 float temp = health;
                 if (value < 0) health = 0;
                 else health = value;
-                hpmaterial.AddOperation(hpbaroffset * (1f - (temp / maxHealth)), "_ClipUvRight", 0.1f, hpbaroffset * (1f - (health / maxHealth)));
+                hpmaterial.AddOperation(hpbaroffset * (1f - (temp / maxHealth)), "_ClipUvRight", 0.4f, hpbaroffset * (1f - (health / maxHealth)));
             }
         }
 
@@ -76,7 +77,7 @@ namespace Dungeon.Creatures
         public ShaderEffects hpmaterial;
         public ShaderEffects outerhpmaterial;
         public Animator animator;
-        private AudioSource audioSource;
+        public AudioSource audioSource;
         public AudioClip impact;
         public GameObject HPBar;
         public HashSet<Creature> seenCreatures = new HashSet<Creature>(); // HashSet - no duplicates allowed
@@ -140,8 +141,11 @@ namespace Dungeon.Creatures
         {
             Vector3 position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             if (moveOrder != null) { Destroy(moveOrder); }
-            moveOrder = new GameObject();
-            moveOrder.transform.position = position;
+            moveOrder = Instantiate(Resources.Load<GameObject>("MoveOrder"), position, Quaternion.identity);
+            if (SoundLibrary.sounds.TryGetValue("Move", out var s))
+            {
+                AudioSource.PlayClipAtPoint(s, position);
+            }
         }
 
         public void CheckFlip()

@@ -21,6 +21,7 @@ public class StealTreasure : Action
             creature.ChangeAnimationState("Idle");
             var stolen = Mathf.Min(closeTreasure.currentGold, 10);
             closeTreasure.currentGold -= stolen;
+            closeTreasure.OpenAnimate();
             GameData.Fame += stolen / 10;
             if (closeTreasure.currentGold <= 0) ObjectManager.KillObject(closeTreasure);
             return TaskStatus.Success;

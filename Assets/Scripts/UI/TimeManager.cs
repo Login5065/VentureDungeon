@@ -99,7 +99,7 @@ namespace Dungeon.UI
             endNightReleased = false;
             periodEnded = true;
             buttonEndNight.transform.DOLocalMoveY(-239, 1.5f, true).SetUpdate(true);
-            StartCoroutine(Statics.DayNightManager.SetDay(5));
+            StartCoroutine(Statics.DayNightManager.SetDay());
         }
     }
 }

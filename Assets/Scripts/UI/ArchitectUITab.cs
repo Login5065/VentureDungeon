@@ -15,13 +15,15 @@ namespace Dungeon.UI
         public List<IExtendedTile> selectedTiles;
         public List<Vector3Int> selectedCoords;
         public bool building = false;
+        private GameObject buildOrder;
 
         void Start()
         {
             selectedTiles = new List<IExtendedTile>();
             Statics.SelectionBox.OnSelectionFinished += SelectionFinished;
             material = (int)UIManager.UIModes.None;
-            gameObject.transform.Find("GroundSwitch").gameObject.GetComponent<Button>().onClick.AddListener(() => ButtonGroundSwitchCallBack());
+            //gameObject.transform.Find("GroundSwitch").gameObject.GetComponent<Button>().onClick.AddListener(() => ButtonGroundSwitchCallBack());
+            buildOrder = Resources.Load<GameObject>("TileOrder");
         }
 
         public override void SetInactive()
@@ -42,6 +44,7 @@ namespace Dungeon.UI
             {
                 building = true;
                 material = item.Data;
+                CursorManager.SetCursor("Architect");
             }
             //if (objectGhost != null) Destroy(objectGhost);
             // objectGhost = Instantiate(currentElement.SpawnObject);
@@ -82,7 +85,9 @@ namespace Dungeon.UI
         {
             foreach (Vector3Int tile in selectedCoords)
             {
-                Statics.MapManager.ReplaceTile(ground, tile, newData: Statics.TileDictionary[Enum.GetName(typeof(Register.TileTypes), index)]);
+                var newTile = Instantiate(buildOrder, new Vector3(tile.x + 0.5f, tile.y + 0.5f, 0), Quaternion.identity).GetComponent<BuildOrder>();
+                newTile.index = index;
+                newTile.ground = ground;
             }
         }
 
@@ -90,7 +95,9 @@ namespace Dungeon.UI
         {
             for (int i = 0; i < selectedTiles.Count; i++)
             {
-                Statics.MapManager.BreakTile(ground, selectedCoords[i]);
+                var newTile = Instantiate(buildOrder, new Vector3(selectedCoords[i].x + 0.5f, selectedCoords[i].y + 0.5f, 0), Quaternion.identity).GetComponent<BuildOrder>();
+                newTile.mine = true;
+                newTile.ground = ground;
             }
         }
 

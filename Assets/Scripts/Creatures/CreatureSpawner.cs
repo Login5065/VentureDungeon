@@ -10,14 +10,12 @@ namespace Dungeon.Creatures
     {
         public Vector2Int spawnDespawnPoint;
 
-        public static float mainSpawnCooldown;
         public static bool done = false;
 
         public void StartSpawning() => StartCoroutine(SpawnCreatures());
 
         private IEnumerator SpawnCreatures()
         {
-            mainSpawnCooldown = 30f;
             var spawnCount = FameInterface.spawnList.Count;
             done = false;
             while(true)

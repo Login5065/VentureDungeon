@@ -18,6 +18,7 @@ namespace Dungeon.UI
         protected override void OnItemSelected(Button button, BaseUIElementHolder item)
         {
             base.OnItemSelected(button, item);
+            CursorManager.SetCursor("Object");
             if (objectGhost != null) Destroy(objectGhost);
             objectGhost = Instantiate(currentElement.SpawnObject);
             ghostRenderer = objectGhost.GetComponent<SpriteRenderer>();

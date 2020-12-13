@@ -30,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 3272866811356469538}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 6, y: 6, z: 4}
+  m_LocalScale: {x: 4, y: 4, z: 4}
   m_Children:
   - {fileID: 1520317894652691519}
   - {fileID: 3705732621163417012}
@@ -101,8 +101,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hpbaroffset: 0.95
-  height: 4
-  width: 4
+  height: 6
+  width: 6
   maxHealth: 1000
   health: 1000
   maxResource: 0
@@ -131,6 +131,7 @@ MonoBehaviour:
   hpmaterial: {fileID: 0}
   outerhpmaterial: {fileID: 0}
   animator: {fileID: 0}
+  audioSource: {fileID: 0}
   impact: {fileID: 8300000, guid: 741b2bde13bd89d4b87708a019bb906c, type: 3}
   HPBar: {fileID: 0}
   hitBox: {fileID: 0}
@@ -138,7 +139,6 @@ MonoBehaviour:
   moveOrder: {fileID: 0}
   lastPosition: {x: 0, y: 0, z: 0}
   anchor: {x: 0, y: 0}
-  spawnerObject: {fileID: 0}
   selectcolor: {r: 1, g: 0.49019608, b: 0, a: 1}
   chosenAttack: {fileID: 0}
 --- !u!95 &3272866811356469550
@@ -181,7 +181,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 500
+  MaxDistance: 40
   Pan2D: 0
   rolloffMode: 0
   BypassEffects: 0
@@ -216,7 +216,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -345,6 +345,7 @@ MonoBehaviour:
   tried: 0
   range: 3
   attackAnimation: Attack1
+  soundEffect: {fileID: 8300000, guid: f7f283872ef63bc43a1136ff9a4d4d25, type: 3}
   attack: 50
   pierce: 1
 --- !u!1 &7674654882600842057
@@ -373,7 +374,7 @@ Transform:
   m_GameObject: {fileID: 7674654882600842057}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: -0.10000001, z: 0}
-  m_LocalScale: {x: 0.19999999, y: 0.19999999, z: 1}
+  m_LocalScale: {x: 0.3, y: 0.3, z: 1}
   m_Children:
   - {fileID: 5389437876095065400}
   m_Father: {fileID: 3272866811356469548}

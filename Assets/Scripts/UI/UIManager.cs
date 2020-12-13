@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Dungeon.Creatures;
 using DG.Tweening;
+using DevionGames.UIWidgets;
 
 namespace Dungeon.UI
 {
@@ -17,6 +18,7 @@ namespace Dungeon.UI
         public Creature SelectedCreature;
         public GameObject ResourcesUI;
         public GameObject Gate;
+        public Tooltip Tooltip;
         public bool DisplayDebugElements
         {
             get => displayDebugElements;
@@ -68,11 +70,12 @@ namespace Dungeon.UI
             };
             ResourcesUI = Instantiate(Resources.Load<GameObject>("UI/Resources"), gameObject.transform, false);
             Gate = Instantiate(Resources.Load<GameObject>("UI/Gate"), gameObject.transform, false);
+            Tooltip = Instantiate(Resources.Load<GameObject>("UI/Tooltip"), gameObject.transform, false).GetComponent<Tooltip>();
             for (int i = 0; i < UITabs.Count; i++)
             {
                 var x = i;
                 UITabs[x].SetupTab();
-                UITabs[x].GenerateUIPage();
+                UITabs[x].GenerateUIPage(UITabs[x].elements.Count);
                 UIButtons[x].onClick.AddListener(() => ButtonBottomUICallBack(x));
                 UITabs[x].gameObject.transform.DOLocalMoveX(UITabs[x].startX, 0, true);
             }

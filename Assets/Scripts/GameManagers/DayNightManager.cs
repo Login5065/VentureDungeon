@@ -1,4 +1,5 @@
 ﻿using DG.Tweening;
+using Dungeon.Audio;
 using Dungeon.Creatures;
 using Dungeon.Spawning;
 using Dungeon.UI;
@@ -64,8 +65,9 @@ namespace Dungeon.Variables
         public IEnumerator SetNight()
         {
             if (IsNight) yield break;
+            MusicManager.Stop();
             StartCoroutine(ActivateGate());
-            yield return new WaitForSecondsRealtime(1.5f);
+            yield return new WaitForSecondsRealtime(2.0f);
             messageEndDay.Find("Text").GetComponent<Text>().text = endDayQuotes[Random.Range(0, endDayQuotes.Count)];
             messageEndDay.DOLocalMoveY(490, 1, true).SetUpdate(true);
             IsNight = true;
@@ -88,15 +90,17 @@ namespace Dungeon.Variables
             yield return new WaitForSecondsRealtime(1.0f);
             StartCoroutine(DeactivateGate());
             yield return new WaitForSecondsRealtime(2.0f);
+            MusicManager.Play("Night");
             Statics.TimeManager.periodEnded = false;
             yield break;
         }
 
-        public IEnumerator SetDay(int totalHeroSpawnCount)
+        public IEnumerator SetDay()
         {
             if (IsDay) yield break;
+            MusicManager.Stop();
             StartCoroutine(ActivateGate());
-            yield return new WaitForSecondsRealtime(1.5f);
+            yield return new WaitForSecondsRealtime(2.0f);
             messageEndNight.Find("Text").GetComponent<Text>().text = endNightQuotes[Random.Range(0, endNightQuotes.Count)];
             messageEndNight.DOLocalMoveY(490, 1, true).SetUpdate(true);
             IsNight = false;
@@ -109,6 +113,7 @@ namespace Dungeon.Variables
             yield return new WaitForSecondsRealtime(1.0f);
             StartCoroutine(DeactivateGate());
             yield return new WaitForSecondsRealtime(2.0f);
+            MusicManager.Play("Day");
             Statics.TimeManager.periodEnded = false;
             Statics.creatureSpawner.StartSpawning();
             yield break;

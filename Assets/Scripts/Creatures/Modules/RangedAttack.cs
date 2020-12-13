@@ -46,6 +46,7 @@ namespace Dungeon.Creatures
         {
             if (owner.closestCreature != null)
             {
+                owner.audioSource.PlayOneShot(soundEffect);
                 owner.isAttacking = true;
                 var created = Instantiate(projectile, new Vector3(transform.position.x, transform.position.y + owner.height / 2), Quaternion.identity).GetComponent<Projectile>();
                 created.maxDistance = range;

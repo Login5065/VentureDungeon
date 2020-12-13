@@ -16,6 +16,7 @@ namespace Dungeon.UI
         protected override void OnItemSelected(Button button, BaseUIElementHolder item)
         {
             base.OnItemSelected(button, item);
+            CursorManager.SetCursor("Attack");
             if (monsterGhost != null) Destroy(monsterGhost); 
             monsterGhost = Instantiate(currentElement.SpawnObject);
             monsterGhost.transform.Find("HP_UI").gameObject.SetActive(false);
