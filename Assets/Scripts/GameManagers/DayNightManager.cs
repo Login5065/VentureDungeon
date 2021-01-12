@@ -15,6 +15,7 @@ namespace Dungeon.Variables
 {
     public class DayNightManager : MonoBehaviour
     {
+        public Eventhandler eventhandler;
         public bool IsNight { get; private set; } = true;
         public bool IsDay => !IsNight;
         public bool CanEndDay => !CreatureManager.register.objects.Where(x => (x.Value.allegiance && !x.Value.dying)).Any() && CreatureSpawner.done;
@@ -30,6 +31,8 @@ namespace Dungeon.Variables
         List<Creature> toClean;
         public void Start()
         {
+            eventhandler = new Eventhandler();
+            eventhandler.Load();
             messageEndDay = Instantiate(Resources.Load<GameObject>("UI/MessageEndDay"), Statics.UI.transform, false).transform;
             messageEndNight = Instantiate(Resources.Load<GameObject>("UI/MessageEndNight"), Statics.UI.transform, false).transform;
             toClean = new List<Creature>();
@@ -92,6 +95,7 @@ namespace Dungeon.Variables
             yield return new WaitForSecondsRealtime(2.0f);
             MusicManager.Play("Night");
             Statics.TimeManager.periodEnded = false;
+            eventhandler.PrepareEvent();
             yield break;
         }
 
@@ -116,6 +120,7 @@ namespace Dungeon.Variables
             MusicManager.Play("Day");
             Statics.TimeManager.periodEnded = false;
             Statics.creatureSpawner.StartSpawning();
+            eventhandler.StartEvent();
             yield break;
         }
 
